@@ -1,0 +1,51 @@
+<form [id]="formId" [formGroup]="form">
+  <section>
+    <fieldset class="form-content marginless">
+      <mat-icon
+        class="hint-icon"
+        [matTooltip]="'FORMS.FEATURE_DEFINITION.NUMBER_OF_VARIANTS_TOOLTIP' | translate"
+        matTooltipPosition="left"
+      >
+        help
+      </mat-icon>
+
+      <div class="d-flex">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>
+            {{ 'FORMS.VARIANTS.NUMBER_OF_VARIANTS' | translate }}
+            <ng-container *ngIf="numberOfVariantsCtrl.enabled"><sup>*</sup></ng-container
+            >:
+          </mat-label>
+          <input
+            matInput
+            formControlName="numberOfVariants"
+            step="1"
+            type="number"
+            [min]="minVariantsCount"
+            max="1000"
+            [placeholder]="'FORMS.VARIANTS.NUMBER_OF_VARIANTS' | translate"
+          />
+        </mat-form-field>
+      </div>
+    </fieldset>
+  </section>
+  <section>
+    <app-use-case-variants
+      [attachments]="attachments"
+      (attachmentsChange)="onAttachmentsChange($event)"
+      formControlName="variants"
+    ></app-use-case-variants>
+  </section>
+</form>
+
+<ng-template
+  #itemTemplate
+  let-index="index"
+  let-type="type"
+  let-data="data"
+  let-currIndex="currIndex"
+>
+  <div *ngIf="type === 'image' && index === currIndex" class="gallery-item-title">
+    <span> {{ data?.title$ | async }} </span>
+  </div>
+</ng-template>

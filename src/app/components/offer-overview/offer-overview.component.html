@@ -1,0 +1,255 @@
+<div class="table-wrapper">
+  <ng-container *ngIf="formStep && init">
+    <div class="d-flex align-items-center mb-16">
+      <span>
+        {{ 'FORMS.TITLES.FEASIBILITY_CHECK' | translate }}
+      </span>
+      <a
+        class="ml-auto font-bold text-decoration-none"
+        [routerLink]="[
+          '/use-cases',
+          'edit',
+          useCase.id,
+          getStepUrl('implementation_feasibility_check')
+        ]"
+        [queryParams]="{ 'tab-index': 0 }"
+      >
+        {{ 'USE_CASE.VIEW_FORM' | translate }}
+      </a>
+    </div>
+
+    <mat-card class="card-info">
+      <mat-list>
+        <div fxLayout="row" class="list-items">
+          <div class="title" fxFlex="40">
+            {{ 'FORMS.IMPLEMENTATION_FEASIBILITY_CHECK.USE_CASE_FEASIBLE' | translate }}
+          </div>
+          <div fxFlex="60">
+            {{
+              (formStep?.implementationFeasibilityCheck?.value ? 'LABEL.YES' : 'LABEL.NO')
+                | translate
+            }}
+          </div>
+        </div>
+      </mat-list>
+    </mat-card>
+  </ng-container>
+
+  <ng-container *ngIf="formStep">
+    <div class="d-flex align-items-center mb-16">
+      <span>
+        {{ 'FORMS.TITLES.COMPLEXITY_DEFINITION' | translate }}
+      </span>
+      <a
+        class="ml-auto font-bold text-decoration-none"
+        [routerLink]="['/use-cases', 'edit', useCase.id, getStepUrl('complexity_definition')]"
+        [queryParams]="{ 'tab-index': 1 }"
+      >
+        {{ 'USE_CASE.VIEW_FORM' | translate }}
+      </a>
+    </div>
+
+    <mat-card class="card-info">
+      <mat-list>
+        <div fxLayout="row" class="list-items">
+          <div class="title" fxFlex="40">
+            {{ 'FORMS.USE_CASE_OFFER.COMPLEXITY_FOR_DATA_SCIENCE' | translate }}
+          </div>
+          <div fxFlex="60">{{ formStep.complexityForDataScience }}</div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div class="title" fxFlex="40">
+            {{ 'FORMS.USE_CASE_OFFER.COMPLEXITY_FOR_PLATFORM' | translate }}
+          </div>
+          <div fxFlex="60">{{ formStep.complexityForBusiness }}</div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div class="title" fxFlex="40">
+            {{ 'FORMS.USE_CASE_OFFER.OFFERABLE_TIMELINE_FOR_IMPLEMENTATION' | translate }}
+          </div>
+          <div fxFlex="60">{{ formStep.timelineForImplementation | shortDate }}</div>
+        </div>
+      </mat-list>
+    </mat-card>
+  </ng-container>
+
+  <ng-container *ngIf="formStep">
+    <div class="d-flex align-items-center mb-16">
+      <span>
+        {{ 'FORMS.TITLES.HARDWARE_COST_DEFINITION' | translate }}
+      </span>
+      <a
+        class="ml-auto font-bold text-decoration-none"
+        [routerLink]="['/use-cases', 'edit', useCase.id, getStepUrl('camera_position_definition')]"
+        [queryParams]="{ 'tab-index': 2 }"
+      >
+        {{ 'USE_CASE.VIEW_FORM' | translate }}
+      </a>
+    </div>
+
+    <mat-card class="card-info">
+      <mat-list>
+        <div
+          fxLayout="row"
+          class="list-items"
+          [class.no-border-bottom]="formStep?.cameraNecessary?.value"
+        >
+          <div class="title" fxFlex="40">
+            {{ 'FORMS.USE_CASE_OFFER.CAMERA_NECESSARY' | translate }}
+          </div>
+          <div fxFlex="60">
+            {{ (formStep?.cameraNecessary?.value ? 'LABEL.YES' : 'LABEL.NO') | translate }}
+          </div>
+        </div>
+        <div fxLayout="row" class="list-items" *ngIf="formStep?.cameraNecessary?.value">
+          <div class="object-view">
+            <div fxLayout="row">
+              <div fxFlex="40">{{ 'FORMS.USE_CASE_OFFER.DEFINITION_OF_CAMERA' | translate }}</div>
+              <div fxFlex="60" class="item">
+                <div>
+                  {{ formStep?.cameraNecessary?.definitionOfCamera }}
+                </div>
+              </div>
+            </div>
+            <div fxLayout="row">
+              <div fxFlex="40">{{ 'FORMS.USE_CASE_OFFER.NUMBER_OF_CAMERAS' | translate }}</div>
+              <div fxFlex="60" class="item">
+                <div>
+                  {{ formStep?.cameraNecessary?.numberOfCameras }}
+                </div>
+              </div>
+            </div>
+            <div fxLayout="row">
+              <div fxFlex="40">{{ 'FORMS.USE_CASE_OFFER.CAMERA_POSITION' | translate }}</div>
+              <div fxFlex="60" class="item">
+                <div>
+                  {{ formStep?.cameraNecessary?.cameraPosition }}
+                </div>
+              </div>
+            </div>
+            <div fxLayout="row">
+              <div fxFlex="40">{{ 'FORMS.USE_CASE_OFFER.CAMERA_HOUSE_NECESSARY' | translate }}</div>
+              <div fxFlex="60" class="item">
+                <div>
+                  {{
+                    (formStep?.cameraNecessary?.cameraHouseNecessary ? 'LABEL.YES' : 'LABEL.NO')
+                      | translate
+                  }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          fxLayout="row"
+          class="list-items"
+          [class.no-border-bottom]="formStep?.edgeDeviceNecessary?.value"
+        >
+          <div fxFlex="40" class="title">
+            {{ 'FORMS.USE_CASE_OFFER.EDGE_DEVICE_NECESSARY' | translate }}
+          </div>
+          <div fxFlex="60">
+            {{ (formStep?.edgeDeviceNecessary?.value ? 'LABEL.YES' : 'LABEL.NO') | translate }}
+          </div>
+        </div>
+        <div fxLayout="row" class="list-items" *ngIf="formStep?.edgeDeviceNecessary?.value">
+          <div class="object-view">
+            <div fxLayout="row">
+              <div fxFlex="40">
+                {{ 'FORMS.USE_CASE_OFFER.DEFINITION_OF_EDGE_DEVICE' | translate }}
+              </div>
+              <div fxFlex="60" class="item">
+                <div>
+                  {{ formStep?.edgeDeviceNecessary?.definitionOfEdgeDevice }}
+                </div>
+              </div>
+            </div>
+            <div fxLayout="row">
+              <div fxFlex="40">
+                {{ 'FORMS.USE_CASE_OFFER.NUMBER_EDGE_DEVICE_NECESSARY' | translate }}
+              </div>
+              <div fxFlex="60" class="item">
+                <div>
+                  {{ formStep?.edgeDeviceNecessary?.numberOfEdgeDevices }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          fxLayout="row"
+          class="list-items"
+          [class.no-border-bottom]="formStep?.additionalLightingNecessary?.value"
+        >
+          <div fxFlex="40" class="title">
+            {{ 'FORMS.USE_CASE_OFFER.ADDITIONAL_LIGHTING_NECESSARY' | translate }}
+          </div>
+          <div fxFlex="60">
+            {{
+              (formStep?.additionalLightingNecessary?.value ? 'LABEL.YES' : 'LABEL.NO') | translate
+            }}
+          </div>
+        </div>
+        <div fxLayout="row" class="list-items" *ngIf="formStep?.additionalLightingNecessary?.value">
+          <div class="object-view">
+            <div fxLayout="row">
+              <div fxFlex="40">
+                {{ 'FORMS.USE_CASE_OFFER.DESCRIPTION_OF_LIGHTING_POSITIONING' | translate }}
+              </div>
+              <div fxFlex="60" class="item">
+                <div>
+                  {{ formStep?.additionalLightingNecessary?.description }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div fxLayout="row" class="list-items">
+          <div fxFlex="40" class="title">
+            {{ 'FORMS.USE_CASE_OFFER.HARDWARE_COST_ESTIMATION' | translate }}
+          </div>
+          <div fxFlex="60">{{ formStep.hardwareCostEstimation }}{{ calc.currencySymbol }}</div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div fxFlex="40" class="title">
+            {{ 'FORMS.USE_CASE_OFFER.INSTALLATION_COST' | translate }}
+          </div>
+          <div fxFlex="60">{{ formStep.installationCost }}{{ calc.currencySymbol }}</div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div fxFlex="40" class="title">
+            {{ 'FORMS.USE_CASE_OFFER.NUMBER_OF_PICTURES_TAKEN_PER_VEHICLE' | translate }}
+          </div>
+          <div fxFlex="60">{{ formStep.numberOfPicturesTakenPerVehicle }}</div>
+        </div>
+
+        <div fxLayout="row" class="list-items no-border-bottom">
+          <div fxFlex="40" class="title">
+            {{ 'FORMS.USE_CASE_OFFER.DEFINITION_NUMBER_TRAINING_IMAGES' | translate }}
+          </div>
+        </div>
+        <div fxLayout="row" class="list-items" *ngIf="formStep.numberOfTrainingImages">
+          <div class="object-view">
+            <div fxLayout="row" *ngFor="let variant of variants; let index = index">
+              <div fxFlex="40">
+                {{ variant.name }}
+              </div>
+              <div fxFlex="60" class="item mb-10">
+                <div>
+                  {{ 'FORMS.USE_CASE_OFFER.NECESSARY_TRAINING_IMAGES_FOR_OK' | translate }}:
+                  {{ formStep.numberOfTrainingImages[index].trainingImagesForOK }}
+                  <br />
+                  {{ 'FORMS.USE_CASE_OFFER.NECESSARY_TRAINING_IMAGES_FOR_NOK' | translate }}:
+                  {{ formStep.numberOfTrainingImages[index].trainingImagesForNOK }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-list>
+    </mat-card>
+  </ng-container>
+</div>

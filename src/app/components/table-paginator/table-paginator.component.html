@@ -1,0 +1,28 @@
+<div class="container table-paginator">
+  <div class="total-items mr-auto">
+    <span class="font-bold">{{ pageCount }}</span>
+    of {{ length }} {{ prefix }}
+  </div>
+
+  <div class="page-select" *ngIf="pageOptions.length > 1">
+    <div class="page-select-label">Jump to page</div>
+
+    <mat-form-field>
+      <mat-select [value]="pageIndex" (selectionChange)="goTo($event.value)">
+        <mat-option *ngFor="let page of pageOptions" [value]="page">
+          {{ page }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    / {{ totalPages }}
+  </div>
+
+  <mat-paginator
+    itemsPerPageLabel="Show"
+    [length]="length"
+    [pageIndex]="pageIndex - 1"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+  ></mat-paginator>
+</div>

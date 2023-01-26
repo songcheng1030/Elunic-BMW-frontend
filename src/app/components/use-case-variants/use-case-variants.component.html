@@ -1,0 +1,245 @@
+<div class="table-wrapper">
+  <form [formGroup]="form" class="p-0">
+    <cdk-virtual-scroll-viewport [tvsItemSize]="92" style="height: 500px">
+      <mat-table [dataSource]="dataSource" multiTemplateDataRows>
+        <!-- Row definitions -->
+        <mat-header-row *matHeaderRowDef="columnNames"></mat-header-row>
+        <mat-row
+          *matRowDef="let variant; columns: columnNames"
+          [formGroupName]="variant.index"
+        ></mat-row>
+        <mat-row
+          *matRowDef="let variant; columns: ['expandedDetail']"
+          [formGroupName]="variant.index"
+          [@detailExpand]="variant === expandedElement ? 'expanded' : 'collapsed'"
+          class="overflow-hidden"
+        >
+        </mat-row>
+
+        <!-- Column definitions -->
+        <ng-container matColumnDef="image">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let variant">
+            <img
+              height="50px"
+              class="pointer"
+              (click)="lightbox.open(0, getGalleryIdOfVariant(variant.index))"
+              [src]="
+                variant.control.value.attachments?.length > 0
+                  ? variant.control.value.attachments[0].image
+                  : ''
+              "
+            />
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="variant">
+          <mat-header-cell *matHeaderCellDef>{{
+            'FORMS.VARIANTS.VARIANT' | translate
+          }}</mat-header-cell>
+          <mat-cell *matCellDef="let variant" [formGroupName]="variant.index">
+            <mat-form-field appearance="outline" floatLabel="always" class="full-width">
+              <mat-label>{{ 'FORMS.VARIANTS.VARIANT' | translate }}:<sup>*</sup></mat-label>
+              <input
+                matInput
+                type="text"
+                formControlName="name"
+                [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+              />
+            </mat-form-field>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="criteria">
+          <mat-header-cell *matHeaderCellDef>
+            <mat-icon
+              class="hint mi-20 mr-8"
+              matTooltipPosition="left"
+              [matTooltip]="'FORMS.VARIANTS.IDENTIFICATION_CRITERIA_TOOLTIP' | translate"
+              (click)="$event.stopPropagation()"
+            >
+              help
+            </mat-icon>
+            {{ 'FORMS.VARIANTS.IDENTIFICATION_CRITERIA' | translate }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let variant" [formGroupName]="variant.index">
+            <ng-container formGroupName="identificationCriteria">
+              <mat-form-field
+                appearance="outline"
+                floatLabel="always"
+                class="full-width criteria-form criteria-dropdown"
+              >
+                <mat-label>{{ 'FORMS.VARIANTS.IDENTIFICATION_CRITERIA' | translate }}:</mat-label>
+                <mat-select
+                  required="true"
+                  multiple
+                  formControlName="values"
+                  [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_CHOOSE' | translate"
+                >
+                  <mat-option *ngFor="let option of idCriteriaOptions" [value]="option.value">
+                    {{ option.label | translate }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field
+                *ngIf="showOtherInput(variant.index)"
+                appearance="outline"
+                floatLabel="always"
+                class="full-width criteria-form"
+              >
+                <mat-label>{{ 'FORMS.FEATURE_DEFINITION.OTHER' | translate }}:</mat-label>
+                <input
+                  matInput
+                  required
+                  formControlName="text"
+                  [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+                />
+              </mat-form-field>
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef>
+            <mat-icon
+              class="hint mi-20 mr-8"
+              matTooltipPosition="left"
+              [matTooltip]="
+                'FORMS.VARIANTS.DESCRIPTION_IDENTIFICATION_CRITERIA_TOOLTIP' | translate
+              "
+              (click)="$event.stopPropagation()"
+            >
+              help
+            </mat-icon>
+            {{ 'FORMS.VARIANTS.DESCRIPTION_IDENTIFICATION_CRITERIA' | translate }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let variant" [formGroupName]="variant.index">
+            <mat-form-field appearance="outline" floatLabel="always" class="full-width">
+              <mat-label
+                >{{ 'FORMS.VARIANTS.DESCRIPTION_IDENTIFICATION_CRITERIA' | translate }}:</mat-label
+              >
+              <input
+                matInput
+                type="text"
+                formControlName="description"
+                [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+              />
+            </mat-form-field>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="imageCount">
+          <mat-header-cell *matHeaderCellDef>
+            {{ 'FORMS.VARIANTS.IMAGES' | translate }}
+          </mat-header-cell>
+          <mat-cell
+            *matCellDef="let variant"
+            [formGroupName]="variant.index"
+            class="d-flex flex-column justify-content-around align-items-start"
+          >
+            <div class="mt-3">{{ variant.control.value.attachments?.length || 0 }}</div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="uploadAction">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let variant" [formGroupName]="variant.index">
+            <div class="d-flex justify-content-center align-items-center">
+              <label class="d-flex">
+                <div class="upload-imgs" [class.disabled]="isDisabled">
+                  {{ 'FORMS.VARIANTS.UPLOAD_IMGS' | translate }}
+                </div>
+                <input
+                  type="file"
+                  multiple="multiple"
+                  accept="image/png, image/jpeg, image/jpg"
+                  class="d-none"
+                  [disabled]="isDisabled"
+                  (change)="onUpload($event.target.files, variant.index); expandedElement = variant"
+                />
+              </label>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="deleteAction">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let variant">
+            <button (click)="removeVariant(variant.index)" [disabled]="isDisabled" mat-icon-button>
+              <mat-icon class="delete-icon" [class.disabled]="isDisabled">delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="expandAction">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let variant">
+            <button
+              mat-icon-button
+              *ngIf="expandedElement !== variant"
+              [class.expanded]="expandedElement === variant"
+              (click)="expandedElement = variant"
+            >
+              <mat-icon>keyboard_arrow_down</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              *ngIf="expandedElement === variant"
+              [class.expanded]="expandedElement === undefined"
+              (click)="expandedElement = undefined"
+            >
+              <mat-icon>keyboard_arrow_up</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Expanded Content Column - The detail row is made up of this one column -->
+        <ng-container matColumnDef="expandedDetail">
+          <mat-cell *matCellDef="let variant" [formGroupName]="variant.index">
+            <div class="d-flex flex-column field-container" formArrayName="attachments">
+              <fieldset
+                *ngFor="
+                  let image of variant.control.value.attachments;
+                  let j = index;
+                  let isLast = last;
+                  trackBy: trackByIndex
+                "
+                class="d-flex align-items-center variants-field"
+                [formGroupName]="j"
+              >
+                <div class="img-container">
+                  <img
+                    width="70px"
+                    height="50px"
+                    class="pointer"
+                    [src]="image.image"
+                    (click)="lightbox.open(j, getGalleryIdOfVariant(variant.index))"
+                  />
+                </div>
+                <ng-container formGroupName="metadata">
+                  <mat-radio-group formControlName="isOK" class="content-wrapper">
+                    <mat-radio-button [value]="true" class="m-4">
+                      {{ 'FORMS.EXAMPLE_IMAGES.OK' | translate }}
+                    </mat-radio-button>
+                    <mat-radio-button [value]="false" class="m-4">
+                      {{ 'FORMS.EXAMPLE_IMAGES.NOK' | translate }}
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </ng-container>
+
+                <button
+                  [disabled]="isDisabled"
+                  mat-icon-button
+                  class="ml-auto"
+                  (click)="removeAttachment(variant.index, j)"
+                >
+                  <mat-icon class="delete-icon">delete</mat-icon>
+                </button>
+              </fieldset>
+            </div>
+          </mat-cell>
+        </ng-container>
+      </mat-table>
+    </cdk-virtual-scroll-viewport>
+  </form>
+</div>

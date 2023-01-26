@@ -1,0 +1,13 @@
+<app-form-container>
+  <ng-container header>
+    <h1 class="mat-h1 mt-20">
+      {{ tabs[selectedTabIndex].title | translate }}
+    </h1>
+  </ng-container>
+  <ng-container body>
+    <app-use-case-order
+      formId="order"
+      [hideOptionalFields]="configurator.showMandatoryOnly"
+    ></app-use-case-order>
+  </ng-container>
+</app-form-container>

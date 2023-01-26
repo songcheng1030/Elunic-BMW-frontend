@@ -1,0 +1,96 @@
+<app-form-container>
+  <ng-container header>
+    <h1 class="mat-h1 mt-20">
+      {{ 'FORMS.TITLES.HARDWARE_DETAILS' | translate }}
+    </h1>
+  </ng-container>
+  <ng-container body>
+    <form [id]="formId" [formGroup]="form">
+      <section>
+        <h5 class="mb-16">
+          {{ 'FORMS.HARDWARE_DETAILS.NSI_SOCKET_DETAILS' | translate }}
+        </h5>
+
+        <fieldset>
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>{{ 'FORMS.HARDWARE_DETAILS.IP_NAME' | translate }}:</mat-label>
+
+            <input
+              matInput
+              formControlName="ipName"
+              [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+            />
+          </mat-form-field>
+        </fieldset>
+
+        <fieldset>
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>{{ 'FORMS.HARDWARE_DETAILS.IP_ADDRESS' | translate }}:</mat-label>
+
+            <input
+              matInput
+              formControlName="ipAddress"
+              [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+            />
+          </mat-form-field>
+        </fieldset>
+
+        <fieldset>
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>{{ 'FORMS.HARDWARE_DETAILS.SUB_NETWORK' | translate }}:</mat-label>
+
+            <input
+              matInput
+              formControlName="subNetwork"
+              [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+            />
+          </mat-form-field>
+        </fieldset>
+
+        <fieldset>
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>{{ 'FORMS.HARDWARE_DETAILS.GATEWAY' | translate }}:</mat-label>
+
+            <input
+              matInput
+              formControlName="gateway"
+              [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+            />
+          </mat-form-field>
+        </fieldset>
+      </section>
+
+      <section>
+        <h5 class="mb-16">
+          {{ 'FORMS.HARDWARE_DETAILS.CAMERA_DETAILS' | translate }}
+        </h5>
+
+        <fieldset>
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>{{ 'FORMS.HARDWARE_DETAILS.CAMERA_PART_NUMBER' | translate }}:</mat-label>
+
+            <input
+              matInput
+              formControlName="cameraPartNumber"
+              [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+            />
+          </mat-form-field>
+        </fieldset>
+
+        <fieldset>
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label
+              >{{ 'FORMS.HARDWARE_DETAILS.CAMERA_INVENTORY_NUMBER' | translate }}:</mat-label
+            >
+
+            <input
+              matInput
+              formControlName="cameraInventoryNumber"
+              [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+            />
+          </mat-form-field>
+        </fieldset>
+      </section>
+    </form>
+  </ng-container>
+</app-form-container>

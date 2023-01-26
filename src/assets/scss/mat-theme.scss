@@ -1,0 +1,29 @@
+@import './quick-palette.scss';
+@import '~@angular/material/theming';
+@include mat-core();
+
+// These palettes are generated using some principle colors from the designs,
+// along with the "material color tool" (http://material.io/resources/color).
+$mat-app-primary: quick-palette(#6596ff, $blue1, #003fa2, $gray13);
+$mat-app-accent: quick-palette(#6c727d, $gray4, #1a2029, $gray13);
+$mat-app-warn: quick-palette(#ff5020, $red1, #980000, $gray13);
+
+$mat-app-theme: mat-light-theme(
+  mat-palette($mat-app-primary),
+  mat-palette($mat-app-accent),
+  mat-palette($mat-app-warn)
+);
+
+@include angular-material-theme($mat-app-theme);
+
+$custom-typography: mat-typography-config(
+  $font-family: 'BMW',
+  $headline: mat-typography-level(18px, 24px, 500),
+  $title: mat-typography-level(16px, 22px, 500),
+  $subheading-2: mat-typography-level(12px, 16px, 500),
+  $subheading-1: mat-typography-level(12px, 16px, 500),
+  $body-1: mat-typography-level(12px, 16px, 400),
+  $body-2: mat-typography-level(12px, 16px, 500),
+  $button: mat-typography-level(12px, 1, 500),
+);
+@include mat-core($custom-typography);

@@ -1,0 +1,107 @@
+@import 'variables';
+
+$status-bar-width: 90%;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.mat-row,
+.mat-header-row {
+  border: 0;
+}
+
+.mat-header-row {
+  min-height: 0;
+}
+
+.mat-header-cell,
+.mat-cell {
+  color: $gray2;
+
+  &:first-of-type {
+    padding-left: 0;
+  }
+
+  &:nth-of-type(2) {
+    padding-left: 27px;
+  }
+
+  &:last-of-type {
+    padding-right: 12px;
+  }
+
+  &.mat-column-image {
+    flex: 0 0 90px;
+  }
+
+  &.mat-column-actions {
+    flex: 0 0 6%;
+  }
+
+  &.mat-column-actions {
+    align-items: flex-end;
+  }
+}
+
+.mat-header-cell {
+  padding-top: 20px;
+  padding-bottom: 15px;
+}
+
+.mat-cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 9px;
+  padding-bottom: 30px;
+  border-top: 1px solid rgba(black, 10%);
+
+  &.mat-column-image {
+    border-top: 0;
+    padding-top: 0;
+  }
+}
+
+:host ::ng-deep {
+  .status-bar {
+    width: $status-bar-width;
+    padding: 4px;
+    .mat-progress-bar {
+      height: 15px;
+      border-radius: 7px;
+
+      .mat-progress-bar-buffer {
+        background-color: $gray6;
+      }
+
+      .mat-progress-bar-fill::after {
+        background-color: $blue1;
+      }
+    }
+
+    &.danger {
+      .mat-progress-bar .mat-progress-bar-fill::after {
+        background-color: $red1 !important;
+      }
+    }
+  }
+}
+
+.status-text {
+  width: $status-bar-width;
+}
+
+.use-case-name {
+  max-height: 48px;
+  line-height: 24px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+}

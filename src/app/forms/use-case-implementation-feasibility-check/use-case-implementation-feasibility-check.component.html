@@ -1,0 +1,30 @@
+<form [formGroup]="form">
+  <ng-container formGroupName="implementationFeasibilityCheck">
+    <fieldset>
+      <h5 class="mb-16">
+        {{ 'FORMS.IMPLEMENTATION_FEASIBILITY_CHECK.USE_CASE_FEASIBLE' | translate }}*
+      </h5>
+      <mat-radio-group
+        aria-label="Select an option"
+        formControlName="value"
+        (change)="onFeasibilityChanged($event.value)"
+      >
+        <mat-radio-button [value]="true">{{ 'LABEL.YES' | translate }}</mat-radio-button>
+        <mat-radio-button class="ml-80" [value]="false">{{
+          'LABEL.NO' | translate
+        }}</mat-radio-button>
+      </mat-radio-group>
+    </fieldset>
+
+    <fieldset *ngIf="!hideTextField">
+      <mat-form-field appearance="outline" floatLabel="always">
+        <textarea
+          matInput
+          required
+          formControlName="text"
+          [placeholder]="'FORMS.DESCRIPTION.REASONING' | translate"
+        ></textarea>
+      </mat-form-field>
+    </fieldset>
+  </ng-container>
+</form>

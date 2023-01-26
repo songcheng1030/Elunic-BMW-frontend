@@ -1,0 +1,92 @@
+@mixin font-sizer($size) {
+  .font-#{$size} {
+    font-size: #{$size}px !important;
+  }
+}
+
+@mixin spacer($size) {
+  $unit: if($size == auto, $size, #{$size}px) !important;
+
+  $sides: (
+    '': '',
+    't': '-top',
+    'b': '-bottom',
+    'l': '-left',
+    'r': '-right',
+  );
+
+  @each $side-abbr, $side in $sides {
+    .p#{$side-abbr}-#{$size} {
+      padding#{$side}: $unit;
+    }
+
+    .m#{$side-abbr}-#{$size} {
+      margin#{$side}: $unit;
+    }
+  }
+
+  .pv-#{$size} {
+    padding-top: $unit;
+    padding-bottom: $unit;
+  }
+
+  .ph-#{$size} {
+    padding-left: $unit;
+    padding-right: $unit;
+  }
+
+  .mv-#{$size} {
+    margin-top: $unit;
+    margin-bottom: $unit;
+  }
+
+  .mh-#{$size} {
+    margin-left: $unit;
+    margin-right: $unit;
+  }
+}
+
+@mixin mobile() {
+  @media only screen and (max-width: $mobile-width) {
+    @content;
+  }
+}
+
+@mixin custom-scrollbar($color: $gray4, $size: 6px, $radius: 6px) {
+  &::-webkit-scrollbar-track {
+    background-color: rgba($color, 45%);
+    border-radius: $radius;
+  }
+
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $color;
+    border-radius: $radius;
+  }
+}
+
+@mixin generate-utility($utility) {
+  $values: map-get($utility, values);
+
+  @if type-of($values) == 'string' or type-of(nth($values, 1)) != 'list' {
+    $values: zip($values, $values);
+  }
+
+  @each $key, $value in $values {
+    $property: map-get($utility, property);
+
+    $property-class: if(map-has-key($utility, class), map-get($utility, class), nth($property, 1));
+
+    $property-class-modifier: if($key, '-' + $key, '');
+
+    @if $value != null {
+      .#{$property-class + $property-class-modifier} {
+        #{$property}: $value !important;
+      }
+    }
+  }
+}

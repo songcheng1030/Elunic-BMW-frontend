@@ -1,0 +1,10 @@
+<form [formGroup]="form">
+  <ng-container formGroupName="ipsPlcTrigger">
+    <editor [init]="init" formControlName="content"></editor>
+    <fieldset class="mt-24">
+      <mat-checkbox color="primary" formControlName="checked">
+        {{ 'FORMS.SETUP_DETAILS.COMPLETED' | translate }}*
+      </mat-checkbox>
+    </fieldset>
+  </ng-container>
+</form>

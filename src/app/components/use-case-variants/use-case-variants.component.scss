@@ -1,0 +1,123 @@
+@import 'variables';
+@import 'tools';
+
+cdk-virtual-scroll-viewport {
+  @include custom-scrollbar;
+}
+
+.content-body {
+  width: 100% !important;
+}
+.table-wrapper {
+  width: 100%;
+}
+.mat-table {
+  display: block;
+  background-color: transparent;
+}
+.mat-row.detail-row {
+  height: 0;
+}
+.detail-element {
+  overflow: hidden;
+  display: flex;
+}
+
+.mat-header-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mat-header-cell,
+.mat-cell {
+  align-self: start;
+  justify-content: start;
+  padding: 15px 3px 10px 3px;
+  &.mat-column-image {
+    flex: 0 0 90px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &.mat-column-variant {
+    flex: 0 0 120px;
+  }
+
+  &.mat-column-criteria {
+    flex: 1 0 200px;
+    &:not(.mat-header-cell) {
+      flex-direction: column;
+    }
+  }
+
+  &.mat-column-description {
+    flex: 0 0 250px;
+  }
+
+  &.mat-column-imageCount {
+    flex: 0 0 90px;
+  }
+
+  &.mat-column-uploadAction {
+    flex: 0 0 90px;
+  }
+
+  &.mat-column-deleteAction {
+    flex: 0 0 40px;
+  }
+
+  &.mat-column-expandAction {
+    flex: 0 0 50px;
+  }
+}
+
+.criteria-form {
+  margin-bottom: 10px;
+}
+
+.delete-icon {
+  color: $red1;
+  font-size: 20px;
+  &.disabled {
+    color: lighten($red1, 50%);
+    cursor: unset;
+  }
+}
+
+.upload-imgs {
+  color: $blue1;
+  cursor: pointer;
+  &.disabled {
+    color: $gray5;
+    cursor: unset;
+  }
+}
+
+.field-container {
+  @include custom-scrollbar;
+
+  width: 100%;
+  max-height: 276px;
+  padding: 8px 40px 8px 90px;
+  background-color: white;
+
+  .variants-field {
+    &:not(:last-child) {
+      border-bottom: solid 1px lightgray;
+    }
+
+    .img-container {
+      width: 90px;
+    }
+  }
+}
+
+.mat-row,
+mat-header-row,
+mat-footer-row {
+  border-style: unset;
+}
+
+fieldset + fieldset {
+  margin-top: unset;
+}

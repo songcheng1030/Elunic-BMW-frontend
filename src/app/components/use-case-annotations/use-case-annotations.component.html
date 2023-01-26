@@ -1,0 +1,5 @@
+<form [formGroup]="form" class="p-0">
+  <h5>{{ 'FORMS.EXAMPLE_IMAGES.TITLE' | translate }}</h5>
+  <app-file-uploader-dropdown type="images" formControlName="files"></app-file-uploader-dropdown>
+  <app-image-annotation formControlName="attachments"></app-image-annotation>
+</form>

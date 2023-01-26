@@ -1,0 +1,25 @@
+<div class="table-wrapper">
+  <ng-container *ngFor="let editor of editors; let index = index">
+    <div class="d-flex align-items-center mb-16">
+      <span>
+        {{ editor.label | translate }}
+      </span>
+      <a
+        class="ml-auto font-bold text-decoration-none"
+        [routerLink]="['/use-cases', 'edit', useCase.id, editor.url]"
+        [queryParams]="{ 'tab-index': index }"
+      >
+        {{ 'USE_CASE.VIEW_FORM' | translate }}
+      </a>
+    </div>
+
+    <mat-card class="card-info">
+      <editor
+        [init]="settings"
+        [initialValue]="editor.content"
+        [disabled]="true"
+        class="editor"
+      ></editor>
+    </mat-card>
+  </ng-container>
+</div>

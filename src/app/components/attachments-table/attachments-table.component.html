@@ -1,0 +1,54 @@
+<table *ngIf="attachments.length > 0; else noAttachments">
+  <tr>
+    <th></th>
+    <th *ngIf="attachments.length > 0 && isVariant(attachments[0])">
+      {{ 'FORMS.VARIANTS.VARIANT' | translate }}
+    </th>
+    <th>
+      {{ 'FORMS.EXAMPLE_IMAGES.OK_NOK' | translate }}
+    </th>
+    <th>{{ 'FORMS.EXAMPLE_IMAGES.DESCRIPTION' | translate }}</th>
+    <th>{{ 'FORMS.EXAMPLE_IMAGES.DATE' | translate }}</th>
+  </tr>
+
+  <tr *ngFor="let attachment of attachments; let i = index">
+    <td>
+      <img
+        class="pointer"
+        [src]="getThumbnailSrc(attachment.refId)"
+        (click)="lightbox.open(i, galleryId)"
+      />
+    </td>
+    <td *ngIf="getVariant(attachment) as variant">{{ variant.name }}</td>
+    <td>
+      {{
+        (attachment.metadata.isOK ? 'FORMS.EXAMPLE_IMAGES.OK' : 'FORMS.EXAMPLE_IMAGES.NOK')
+          | translate
+      }}
+    </td>
+    <td>{{ attachment.metadata.description }}</td>
+    <td>
+      {{ (attachment.createdAt | shortDate) + ' - ' + (attachment.createdAt | shortTime) }}
+    </td>
+  </tr>
+</table>
+
+<ng-template #noAttachments>
+  <div class="empty-state-message">
+    <span class="text-light-gray">
+      {{ 'USE_CASE.NO_ATTACHMENTS_FOUND' | translate }}
+    </span>
+  </div>
+</ng-template>
+
+<ng-template
+  #itemTemplate
+  let-index="index"
+  let-type="type"
+  let-data="data"
+  let-currIndex="currIndex"
+>
+  <div *ngIf="type === 'image' && index === currIndex" class="gallery-item-title">
+    <span> {{ data?.title$ | async }} </span>
+  </div>
+</ng-template>

@@ -1,0 +1,114 @@
+<div class="container">
+  <mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="image">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <img [src]="getThumbnailSrc(element.image)" />
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{
+        'USE_CASE.USE_CASE' | translate
+      }}</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <a
+          [routerLink]="['/use-cases', element.id]"
+          class="text-blue font-bold no-underline use-case-name"
+          matTooltipPosition="left"
+          matTooltipClass="use-case-name-tooltip"
+          [matTooltip]="element.name"
+        >
+          {{ element.name | slice: 0:36 }}
+        </a>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="createdBy">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{
+        'USE_CASE.REQUESTOR' | translate
+      }}</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.createdBy | username }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="updatedAt">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{
+        'USE_CASE.LAST_CHANGED' | translate
+      }}</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.updatedAt | shortDate }} <br />
+        {{ element.updatedAt | shortTime }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'USE_CASE.STATUS_LABEL' | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span class="font-bold status-text pl-4" [style.color]="getStepColor(element)">
+          {{ getStepLabel(element) }}
+        </span>
+        <div class="status-bar" [class.danger]="isDeclined(element)">
+          <mat-progress-bar mode="determinate" [value]="getUseCaseProgress(element)">
+          </mat-progress-bar>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="responsible">
+      <mat-header-cell *matHeaderCellDef>
+        {{ 'USE_CASE.RESPONSIBLE_FOR_NEXT' | translate }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ getNextStepResponsibility(element) | translate }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <mat-menu #menu="matMenu" xPosition="before">
+          <a [routerLink]="['/use-cases', element.id]" class="no-underline">
+            <button class="justify-content-end" mat-menu-item>
+              {{ 'ACTION.VIEW_DETAILS' | translate }}
+            </button>
+          </a>
+          <a
+            [routerLink]="['/use-cases', 'edit', element.id, getCurrentStep(element)]"
+            class="no-underline"
+          >
+            <button *ngIf="canEdit(element)" class="justify-content-end" mat-menu-item>
+              {{ 'ACTION.EDIT' | translate }}
+            </button>
+          </a>
+          <button
+            *ngIf="canDelete(element)"
+            class="justify-content-end"
+            mat-menu-item
+            (click)="openConfirmModal(element)"
+          >
+            {{ 'ACTION.DELETE' | translate }}
+          </button>
+        </mat-menu>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="visibleColumns$ | async"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: visibleColumns$ | async"></mat-row>
+  </mat-table>
+</div>
+
+<app-table-paginator
+  class="mt-auto"
+  [prefix]="'USE_CASE.USE_CASES' | translate"
+  [pageCount]="dataSource.pageResMeta.count"
+  [pageIndex]="dataSource.pageResMeta.page"
+  [pageSizeOptions]="[10, 25, 50]"
+  [length]="dataSource.pageResMeta.total"
+>
+</app-table-paginator>

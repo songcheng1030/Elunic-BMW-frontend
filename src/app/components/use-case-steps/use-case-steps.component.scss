@@ -1,0 +1,20 @@
+:host {
+  z-index: 10;
+}
+:host {
+  width: 100%;
+}
+
+.steps {
+  width: 100%;
+  display: inline-flex;
+  align-items: flex-end;
+
+  app-use-case-step {
+    flex: 1;
+
+    &:last-child {
+      flex: 0 0 150px;
+    }
+  }
+}

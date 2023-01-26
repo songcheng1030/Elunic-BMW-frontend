@@ -1,0 +1,60 @@
+@import 'variables';
+
+.content-body {
+  width: 100% !important;
+}
+.table-wrapper {
+  width: 100%;
+}
+.mat-table {
+  display: block;
+  background-color: transparent;
+}
+.mat-row.detail-row {
+  height: 0;
+}
+.detail-element {
+  overflow: hidden;
+  display: flex;
+}
+
+.mat-header-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mat-header-cell,
+.mat-cell {
+  padding: 15px 3px 15px 3px;
+
+  &.mat-column-variantName {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 18% !important;
+    width: 18% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+
+    justify-content: center;
+  }
+}
+
+.delete-icon {
+  color: $red1;
+  font-size: 20px;
+}
+
+.field-container {
+  width: 100%;
+  padding-left: 90px;
+  padding-right: 40px;
+  background-color: white;
+  .variants-field {
+    border-bottom: solid 1px lightgray;
+
+    .img-container {
+      width: 90px;
+    }
+  }
+}

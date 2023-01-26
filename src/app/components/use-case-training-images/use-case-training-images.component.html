@@ -1,0 +1,73 @@
+<div class="table-wrapper">
+  <form [formGroup]="form" class="p-0">
+    <mat-table [dataSource]="dataSource" multiTemplateDataRows>
+      <!-- Row definitions -->
+      <mat-header-row *matHeaderRowDef="columnNames"></mat-header-row>
+      <mat-row
+        *matRowDef="let variant; let i = dataIndex; columns: columnNames"
+        [formGroupName]="i"
+      ></mat-row>
+
+      <!-- Column definitions -->
+      <ng-container matColumnDef="variantName">
+        <mat-header-cell *matHeaderCellDef>{{
+          'FORMS.VARIANTS.VARIANT' | translate
+        }}</mat-header-cell>
+        <mat-cell *matCellDef="let variant; let i = dataIndex">
+          {{ variants[i]?.name }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="trainingImagesForOK">
+        <mat-header-cell *matHeaderCellDef
+          >{{ 'FORMS.USE_CASE_OFFER.NECESSARY_TRAINING_IMAGES_FOR_OK' | translate
+          }}<sup>*</sup></mat-header-cell
+        >
+        <mat-cell *matCellDef="let variant; let i = dataIndex" [formGroupName]="i">
+          <mat-form-field appearance="outline" floatLabel="always" class="full-width">
+            <mat-label
+              >{{ 'FORMS.USE_CASE_OFFER.NECESSARY_TRAINING_IMAGES_FOR_OK' | translate }}:</mat-label
+            >
+            <input
+              matInput
+              required
+              formControlName="trainingImagesForOK"
+              step="1"
+              min="0"
+              mask="separator.0"
+              [decimalMarker]="'COMMON.DECIMAL_SEPARATOR' | translate"
+              [thousandSeparator]="'COMMON.THOUSAND_SEPARATOR' | translate"
+              [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+            />
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="trainingImagesForNOK">
+        <mat-header-cell *matHeaderCellDef
+          >{{ 'FORMS.USE_CASE_OFFER.NECESSARY_TRAINING_IMAGES_FOR_NOK' | translate
+          }}<sup>*</sup></mat-header-cell
+        >
+        <mat-cell *matCellDef="let variant; let i = dataIndex" [formGroupName]="i">
+          <mat-form-field appearance="outline" floatLabel="always" class="full-width">
+            <mat-label
+              >{{
+                'FORMS.USE_CASE_OFFER.NECESSARY_TRAINING_IMAGES_FOR_NOK' | translate
+              }}:</mat-label
+            >
+            <input
+              matInput
+              required
+              formControlName="trainingImagesForNOK"
+              step="1"
+              min="0"
+              mask="separator.0"
+              [decimalMarker]="'COMMON.DECIMAL_SEPARATOR' | translate"
+              [thousandSeparator]="'COMMON.THOUSAND_SEPARATOR' | translate"
+              [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+            />
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+    </mat-table>
+  </form>
+</div>

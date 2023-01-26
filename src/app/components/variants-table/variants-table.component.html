@@ -1,0 +1,18 @@
+<div *ngIf="variants.length > 0; else noAttachments">
+  <div
+    *ngFor="let variant of variants; let i = index; let last = last"
+    class="p-4"
+    [class.border-bottom]="!last"
+  >
+    <app-variants [attachments]="getAttachments(i)" [variant]="variant" class="full-width">
+    </app-variants>
+  </div>
+</div>
+
+<ng-template #noAttachments>
+  <div class="empty-state-message">
+    <span class="text-light-gray">
+      {{ 'USE_CASE.NO_ATTACHMENTS_FOUND' | translate }}
+    </span>
+  </div>
+</ng-template>

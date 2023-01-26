@@ -1,0 +1,18 @@
+@import 'variables';
+
+table {
+  margin-top: 8px;
+  width: 100%;
+  > * {
+    text-align: left;
+    width: 100%;
+  }
+}
+
+.empty-state-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 60px;
+}

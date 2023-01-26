@@ -1,0 +1,70 @@
+<form [id]="formId" [formGroup]="form">
+  <section>
+    <fieldset>
+      <mat-icon
+        [matTooltip]="'FORMS.PROJECT_PLANNING.COMPLETION_DATE_TOOLTIP' | translate"
+        matTooltipPosition="left"
+        class="hint-icon"
+      >
+        help
+      </mat-icon>
+
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.PROJECT_PLANNING.COMPLETION_DATE' | translate }}:</mat-label>
+        <input
+          matInput
+          required
+          readonly
+          formControlName="completionDate"
+          [matDatepicker]="picker"
+          [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_CHOOSE' | translate"
+          (click)="picker.open()"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </fieldset>
+  </section>
+
+  <section>
+    <ng-template #planningGroupTemplate let-group="group">
+      <app-project-planning-group
+        [required]="group.required"
+        [title]="(group.title | translate) + (group.required ? '*' : '')"
+        [functionOptions]="group.functionOptions"
+        [formControlName]="group.control"
+        [requireInformed]="group.requireInformed"
+        [touched]="form.get(group.control)?.touched"
+      ></app-project-planning-group>
+    </ng-template>
+
+    <ng-container
+      *ngTemplateOutlet="planningGroupTemplate; context: { group: groups[0] }"
+    ></ng-container>
+
+    <div class="grid-container">
+      <div fxLayout="row wrap" fxLayoutGap="32px grid">
+        <div fxFlex="50%">
+          <ng-container
+            *ngTemplateOutlet="planningGroupTemplate; context: { group: groups[1] }"
+          ></ng-container>
+        </div>
+        <div fxFlex="50%">
+          <ng-container
+            *ngTemplateOutlet="planningGroupTemplate; context: { group: groups[2] }"
+          ></ng-container>
+        </div>
+        <div fxFlex="50%">
+          <ng-container
+            *ngTemplateOutlet="planningGroupTemplate; context: { group: groups[3] }"
+          ></ng-container>
+        </div>
+        <div fxFlex="50%">
+          <ng-container
+            *ngTemplateOutlet="planningGroupTemplate; context: { group: groups[4] }"
+          ></ng-container>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>

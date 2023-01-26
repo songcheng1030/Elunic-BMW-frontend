@@ -1,0 +1,11 @@
+<mat-form-field appearance="outline" floatLabel="always">
+  <mat-select
+    [placeholder]="'USE_CASE.FILTER_BY_STEP' | translate"
+    multiple
+    (selectionChange)="onChange($event.value)"
+  >
+    <mat-option *ngFor="let option of statusOptions" [value]="option">
+      {{ option.label | translate }}</mat-option
+    >
+  </mat-select>
+</mat-form-field>

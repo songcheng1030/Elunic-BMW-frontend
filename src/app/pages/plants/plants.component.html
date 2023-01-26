@@ -1,0 +1,23 @@
+<div class="content ph-120">
+  <app-breadcrumb class="d-block mb-18" [segments]="segments"></app-breadcrumb>
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <div fxFlex="33%" fxFlex.md="50%" fxFlex.sm="100%" *ngFor="let plant of plants$ | async">
+      <a [routerLink]="['/plants', plant.id, 'use-cases']" class="no-underline">
+        <mat-card class="mat-elevation-z2" matRipple>
+          <mat-card-header class="pt-10">
+            <mat-card-title>{{ plant.id }} - {{ plant.name }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="card-content">
+              <span class="country">{{ plant.country | uppercase }}</span>
+              <span>
+                {{ 'USE_CASE.USE_CASES' | translate }}:
+                <b>{{ (plant.useCasesNum$ | async) || 0 }}</b>
+              </span>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </div>
+  </div>
+</div>

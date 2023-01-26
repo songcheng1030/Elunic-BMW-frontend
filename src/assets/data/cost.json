@@ -1,0 +1,108 @@
+{
+  "s_use_case": {
+    "hardware": 4100,
+    "implementation": 2800,
+    "installation": 1500,
+    "annual_costs": 1200
+  },
+  "m_use_case": {
+    "hardware": 6700,
+    "implementation": 4500,
+    "installation": 2.0,
+    "annual_costs": 1800
+  },
+  "l_use_case": {
+    "hardware": 11800,
+    "implementation": 6100,
+    "installation": 2500,
+    "annual_costs": 3200
+  },
+  "combination_implementation": {
+    "S": {
+      "S": {
+        "EUR": 2800,
+        "USD": 3400
+      },
+      "M": {
+        "EUR": 4000,
+        "USD": 4800
+      },
+      "L": {
+        "EUR": 5200,
+        "USD": 6200
+      }
+    },
+    "M": {
+      "S": {
+        "EUR": 3300,
+        "USD": 3900
+      },
+      "M": {
+        "EUR": 4500,
+        "USD": 5300
+      },
+      "L": {
+        "EUR": 5700,
+        "USD": 6800
+      }
+    },
+    "L": {
+      "S": {
+        "EUR": 3800,
+        "USD": 4500
+      },
+      "M": {
+        "EUR": 5000,
+        "USD": 5900
+      },
+      "L": {
+        "EUR": 6100,
+        "USD": 7300
+      }
+    }
+  },
+  "combination_yearly": {
+    "S": {
+      "S": {
+        "EUR": 1200.0,
+        "USD": 1400.0
+      },
+      "M": {
+        "EUR": 1700.0,
+        "USD": 2000.0
+      },
+      "L": {
+        "EUR": 2600.0,
+        "USD": 3100.0
+      }
+    },
+    "M": {
+      "S": {
+        "EUR": 1400.0,
+        "USD": 1600.0
+      },
+      "M": {
+        "EUR": 1800.0,
+        "USD": 2200.0
+      },
+      "L": {
+        "EUR": 2800.0,
+        "USD": 3300.0
+      }
+    },
+    "L": {
+      "S": {
+        "EUR": 1800.0,
+        "USD": 2100.0
+      },
+      "M": {
+        "EUR": 2300.0,
+        "USD": 2700.0
+      },
+      "L": {
+        "EUR": 3200.0,
+        "USD": 3800.0
+      }
+    }
+  }
+}

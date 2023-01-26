@@ -1,0 +1,28 @@
+@import 'variables';
+
+.table-paginator,
+.mat-paginator {
+  color: $gray2;
+}
+
+:host ::ng-deep .table-paginator {
+  display: flex;
+  align-items: baseline;
+  box-shadow: 0 -1px 4px 0 rgba(black, 10%);
+
+  .page-select-label,
+  .mat-paginator-page-size-label {
+    margin: 0 10px 0 0;
+  }
+
+  .page-select {
+    display: flex;
+    align-items: baseline;
+    margin-right: 50px;
+  }
+
+  .mat-form-field {
+    width: 42px;
+    font-weight: 500;
+  }
+}

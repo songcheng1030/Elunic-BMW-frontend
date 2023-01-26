@@ -1,0 +1,35 @@
+@function quick-palette($light, $primary, $dark, $contrast) {
+  $value: (
+    50: $light,
+    100: $light,
+    200: $light,
+    300: $primary,
+    400: $primary,
+    500: $primary,
+    600: $primary,
+    700: $primary,
+    800: $primary,
+    900: $primary,
+    A100: $dark,
+    A200: $dark,
+    A400: $dark,
+    A700: $dark,
+    contrast: (
+      50: $contrast,
+      100: $contrast,
+      200: $contrast,
+      300: $contrast,
+      400: $contrast,
+      500: $contrast,
+      600: $contrast,
+      700: $contrast,
+      800: $contrast,
+      900: $contrast,
+      A100: $contrast,
+      A200: $contrast,
+      A400: $contrast,
+      A700: $contrast,
+    ),
+  );
+  @return $value;
+}

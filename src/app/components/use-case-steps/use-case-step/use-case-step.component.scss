@@ -1,0 +1,101 @@
+@import 'variables';
+
+$step-width: 150px;
+$trail-size: 7px;
+$indicator-size: 36px;
+
+.step-alert {
+  width: $step-width;
+  margin-bottom: 8px;
+  text-align: center;
+  color: $blue1;
+}
+
+.step-container {
+  position: relative;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: $step-width;
+  text-align: center;
+
+  .step-header {
+    min-height: 32px;
+    max-width: 120px;
+    margin: 0 auto 10px;
+  }
+
+  .step-body {
+    .indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: $indicator-size;
+      height: $indicator-size;
+      margin: 0 auto;
+      border-radius: 50%;
+      border-style: solid;
+
+      &.danger {
+        border-color: $red1 !important;
+        mat-icon {
+          background-color: $red1 !important;
+        }
+      }
+
+      mat-icon {
+        display: block;
+        color: $gray13;
+        font-weight: bold;
+        background-color: #353c46;
+        border-radius: 50%;
+      }
+    }
+
+    .trail {
+      position: absolute;
+      top: 50%;
+      left: 75px;
+      height: $trail-size;
+      transform: translateY(-50%);
+      background-color: $gray10;
+      overflow: hidden;
+      width: 100%;
+      z-index: -1;
+
+      .trail-progress {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: $gray3;
+      }
+      .trail-progress-stop {
+        background-color: $gray10 !important;
+      }
+    }
+  }
+
+  .step-footer {
+    min-height: 26px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+    font-size: 10px;
+    color: $gray5;
+
+    a {
+      color: $gray5;
+      transition: color 0.25s ease;
+
+      &:hover {
+        color: $gray4;
+      }
+    }
+  }
+}

@@ -1,0 +1,203 @@
+<form [id]="formId" [formGroup]="form">
+  <section>
+    <ng-container formGroupName="cameraNecessary">
+      <fieldset>
+        <h5 class="mb-16">{{ 'FORMS.USE_CASE_OFFER.CAMERA_NECESSARY' | translate }}*</h5>
+        <mat-radio-group aria-label="Select an option" formControlName="value">
+          <mat-radio-button [value]="true">{{ 'LABEL.YES' | translate }}</mat-radio-button>
+          <mat-radio-button class="ml-80" [value]="false">{{
+            'LABEL.NO' | translate
+          }}</mat-radio-button>
+        </mat-radio-group>
+      </fieldset>
+
+      <fieldset *ngIf="cameraNecessaryCtrl.get('value')?.value === true">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label> {{ 'FORMS.USE_CASE_OFFER.DEFINITION_OF_CAMERA' | translate }}:</mat-label>
+          <input
+            matInput
+            required
+            formControlName="definitionOfCamera"
+            [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+          />
+        </mat-form-field>
+      </fieldset>
+
+      <fieldset *ngIf="cameraNecessaryCtrl.get('value')?.value === true">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>{{ 'FORMS.USE_CASE_OFFER.NUMBER_OF_CAMERAS' | translate }}:</mat-label>
+          <input
+            matInput
+            required
+            formControlName="numberOfCameras"
+            step="1"
+            min="0"
+            mask="separator.0"
+            [decimalMarker]="'COMMON.DECIMAL_SEPARATOR' | translate"
+            [thousandSeparator]="'COMMON.THOUSAND_SEPARATOR' | translate"
+            [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+          />
+        </mat-form-field>
+      </fieldset>
+
+      <fieldset optionalField *ngIf="cameraNecessaryCtrl.get('value')?.value === true">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label> {{ 'FORMS.USE_CASE_OFFER.CAMERA_POSITION' | translate }}:</mat-label>
+          <input
+            matInput
+            formControlName="cameraPosition"
+            [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+          />
+        </mat-form-field>
+      </fieldset>
+
+      <fieldset *ngIf="cameraNecessaryCtrl.get('value')?.value === true" class="mb-16">
+        <div class="mb-16">{{ 'FORMS.USE_CASE_OFFER.CAMERA_HOUSE_NECESSARY' | translate }}*</div>
+
+        <mat-radio-group aria-label="Select an option" formControlName="cameraHouseNecessary">
+          <mat-radio-button [value]="true">{{ 'LABEL.YES' | translate }}</mat-radio-button>
+          <mat-radio-button class="ml-80" [value]="false">{{
+            'LABEL.NO' | translate
+          }}</mat-radio-button>
+        </mat-radio-group>
+      </fieldset>
+    </ng-container>
+
+    <ng-container formGroupName="edgeDeviceNecessary">
+      <fieldset>
+        <h5 class="mb-16">{{ 'FORMS.USE_CASE_OFFER.EDGE_DEVICE_NECESSARY' | translate }}*</h5>
+        <mat-radio-group aria-label="Select an option" formControlName="value">
+          <mat-radio-button [value]="true">{{ 'LABEL.YES' | translate }}</mat-radio-button>
+          <mat-radio-button class="ml-80" [value]="false">{{
+            'LABEL.NO' | translate
+          }}</mat-radio-button>
+        </mat-radio-group>
+      </fieldset>
+
+      <fieldset *ngIf="edgeDeviceNecessaryCtrl.get('value')?.value === true">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>
+            {{ 'FORMS.USE_CASE_OFFER.DEFINITION_OF_EDGE_DEVICE' | translate }}:
+          </mat-label>
+          <input
+            matInput
+            required
+            formControlName="definitionOfEdgeDevice"
+            [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+          />
+        </mat-form-field>
+      </fieldset>
+
+      <fieldset *ngIf="edgeDeviceNecessaryCtrl.get('value')?.value === true" class="mb-16">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label
+            >{{ 'FORMS.USE_CASE_OFFER.NUMBER_EDGE_DEVICE_NECESSARY' | translate }}:</mat-label
+          >
+          <input
+            matInput
+            required
+            formControlName="numberOfEdgeDevices"
+            step="1"
+            min="0"
+            mask="separator.0"
+            [decimalMarker]="'COMMON.DECIMAL_SEPARATOR' | translate"
+            [thousandSeparator]="'COMMON.THOUSAND_SEPARATOR' | translate"
+            [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+          />
+        </mat-form-field>
+      </fieldset>
+    </ng-container>
+
+    <ng-container formGroupName="additionalLightingNecessary">
+      <fieldset>
+        <h5 class="mb-16">
+          {{ 'FORMS.USE_CASE_OFFER.ADDITIONAL_LIGHTING_NECESSARY' | translate }}*
+        </h5>
+
+        <mat-radio-group aria-label="Select an option" formControlName="value">
+          <mat-radio-button [value]="true">{{ 'LABEL.YES' | translate }}</mat-radio-button>
+          <mat-radio-button class="ml-80" [value]="false">{{
+            'LABEL.NO' | translate
+          }}</mat-radio-button>
+        </mat-radio-group>
+      </fieldset>
+
+      <fieldset *ngIf="additionalLightingNecessaryCtrl.get('value')?.value === true" class="mb-16">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>
+            {{ 'FORMS.USE_CASE_OFFER.DESCRIPTION_OF_LIGHTING_POSITIONING' | translate }}:
+          </mat-label>
+          <input
+            matInput
+            required
+            formControlName="description"
+            [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+          />
+        </mat-form-field>
+      </fieldset>
+    </ng-container>
+
+    <fieldset>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.USE_CASE_OFFER.HARDWARE_COST_ESTIMATION' | translate }}:</mat-label>
+        <input
+          formControlName="hardwareCostEstimation"
+          matInput
+          required
+          min="0"
+          mask="separator.2"
+          suffix="€"
+          [decimalMarker]="'COMMON.DECIMAL_SEPARATOR' | translate"
+          [thousandSeparator]="'COMMON.THOUSAND_SEPARATOR' | translate"
+          [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+        />
+      </mat-form-field>
+    </fieldset>
+
+    <fieldset>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.USE_CASE_OFFER.INSTALLATION_COST' | translate }}:</mat-label>
+        <input
+          formControlName="installationCost"
+          matInput
+          required
+          min="0"
+          mask="separator.2"
+          suffix="€"
+          [decimalMarker]="'COMMON.DECIMAL_SEPARATOR' | translate"
+          [thousandSeparator]="'COMMON.THOUSAND_SEPARATOR' | translate"
+          [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+        />
+      </mat-form-field>
+    </fieldset>
+
+    <fieldset>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>
+          {{ 'FORMS.USE_CASE_OFFER.NUMBER_OF_PICTURES_TAKEN_PER_VEHICLE' | translate }}:
+        </mat-label>
+        <input
+          formControlName="numberOfPicturesTakenPerVehicle"
+          matInput
+          required
+          step="1"
+          min="0"
+          mask="separator.0"
+          [decimalMarker]="'COMMON.DECIMAL_SEPARATOR' | translate"
+          [thousandSeparator]="'COMMON.THOUSAND_SEPARATOR' | translate"
+          [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+        />
+      </mat-form-field>
+    </fieldset>
+  </section>
+
+  <section>
+    <h5 class="mb-16">
+      {{ 'FORMS.USE_CASE_OFFER.DEFINITION_NUMBER_TRAINING_IMAGES' | translate }}
+    </h5>
+    <app-use-case-training-images
+      formControlName="numberOfTrainingImages"
+      [variants]="variants"
+    ></app-use-case-training-images>
+  </section>
+</form>

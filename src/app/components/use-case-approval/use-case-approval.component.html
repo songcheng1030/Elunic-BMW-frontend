@@ -1,0 +1,48 @@
+<app-form-container>
+  <ng-container header>
+    <h1 class="mat-h1 mt-20">
+      {{ 'FORMS.TITLES.APPROVAL' | translate }}
+    </h1>
+  </ng-container>
+  <ng-container body>
+    <form [id]="formId" [formGroup]="form">
+      <section>
+        <fieldset>
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>{{ 'FORMS.APPROVAL.APTITUDE_TEST' | translate }}:</mat-label>
+            <input
+              matInput
+              required
+              readonly
+              formControlName="testDate"
+              [matDatepicker]="picker"
+              [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_CHOOSE' | translate"
+              (click)="picker.open()"
+            />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </fieldset>
+        <fieldset class="mt-50">
+          <h5>{{ 'FORMS.APPROVAL.TESTING_RESULT' | translate }} *</h5>
+          <app-file-uploader-dropdown
+            type="image_pdf"
+            formControlName="files"
+            required
+          ></app-file-uploader-dropdown>
+          <div *ngIf="file && fileUrl">
+            <a [href]="fileUrl | safe" target="_blank">{{ file.name }}</a>
+            <button (click)="getControl('files').setValue([])" mat-icon-button>
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </fieldset>
+        <fieldset class="mt-50">
+          <mat-checkbox color="primary" formControlName="approved" required>
+            {{ 'FORMS.APPROVAL.FINAL_APPROVAL' | translate }}*
+          </mat-checkbox>
+        </fieldset>
+      </section>
+    </form>
+  </ng-container>
+</app-form-container>

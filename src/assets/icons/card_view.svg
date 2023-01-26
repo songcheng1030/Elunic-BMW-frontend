@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>card_icon</title>
+    <g id="Search-Results" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Search-Results-Table" transform="translate(-1636.000000, -31.000000)" fill="#8e8e8e">
+            <g id="Card-Toggle" transform="translate(1608.000000, 31.000000)">
+                <g id="card_icon" transform="translate(28.000000, 0.000000)">
+                    <path d="M7.875,6.125 L14,6.125 L14,0 L7.875,0 L7.875,6.125 Z M0,6.125 L6.125,6.125 L6.125,0 L0,0 L0,6.125 Z M7.875,14 L14,14 L14,7.875 L7.875,7.875 L7.875,14 Z M0,14 L6.125,14 L6.125,7.875 L0,7.875 L0,14 Z" id="icon_explore"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

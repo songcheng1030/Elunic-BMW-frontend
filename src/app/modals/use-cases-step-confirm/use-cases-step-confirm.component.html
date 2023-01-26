@@ -1,0 +1,17 @@
+<app-modal *ngIf="template as t">
+  <mat-dialog-content body>
+    <img [src]="t.iconUrl" width="80px" />
+    <h2 header class="title">{{ t.title | translate }}</h2>
+    <h4 header class="sub-title" *ngIf="t.subTitle">({{ t.subTitle | translate }})</h4>
+    <p *ngFor="let text of t.text">
+      {{ text | translate }}
+    </p>
+  </mat-dialog-content>
+  <mat-dialog-actions actions>
+    <button mat-button [mat-dialog-close]="true" class="confirm-btn">
+      {{ 'MODALS.STEP_SUBMITTED.OK' | translate }}
+    </button>
+
+    <p *ngIf="t.footerText">{{ t.footerText | translate }}</p>
+  </mat-dialog-actions>
+</app-modal>

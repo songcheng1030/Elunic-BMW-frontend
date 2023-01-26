@@ -1,0 +1,46 @@
+@import 'variables';
+
+ol {
+  display: flex;
+  align-items: baseline;
+  margin: 0;
+  padding: 0;
+  color: $gray5;
+  list-style: none;
+  font-size: 12px;
+
+  a {
+    color: $gray5;
+    transition: color 0.25s ease;
+
+    &:not(.last):hover {
+      color: $gray4;
+    }
+
+    &.last {
+      pointer-events: none;
+      text-decoration: none;
+    }
+
+    .back-icon {
+      font-size: 14px;
+      top: 2px;
+      position: relative;
+    }
+  }
+
+  .divider {
+    margin: 0 5px;
+  }
+
+  .segment-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 20px;
+    line-height: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+  }
+}

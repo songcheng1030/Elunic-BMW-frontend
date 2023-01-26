@@ -1,0 +1,17 @@
+{
+  "src/**/!(*.spec|test).ts": [
+    "eslint --no-eslintrc -c .eslintrc.fix.json --fix",
+    "prettier --write"
+  ],
+  "src/{test.ts,**/*.spec.ts}": [
+    "eslint --no-eslintrc -c .eslintrc.fix.json --fix",
+    "prettier --write"
+  ],
+  "e2e/**/*.ts": ["eslint --no-eslintrc -c .eslintrc.fix.json --fix", "prettier --write"],
+  "{e2e/src,src}/**/*.html": [
+    "eslint --no-eslintrc -c .eslintrc.fix.json --fix",
+    "prettier --write"
+  ],
+  "{e2e/src,src}/**/*.{js,css,scss,sass,less}": ["prettier --write"],
+  "src/assets/i18n/**": ["jsonsort"]
+}

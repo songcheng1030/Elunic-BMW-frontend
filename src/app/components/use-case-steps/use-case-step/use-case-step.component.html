@@ -1,0 +1,47 @@
+<ng-container *ngIf="step.actionRoute">
+  <p class="step-alert">
+    <a [routerLink]="step.actionRoute">{{ 'USE_CASE.ACTION_REQUIRED' | translate }}</a>
+  </p>
+</ng-container>
+
+<div class="step-container">
+  <div class="step">
+    <div class="step-header">{{ nameMap[step.name] | translate }}</div>
+
+    <div
+      class="step-body"
+      [@state]="{
+        value: step.animationMetadata.state,
+        params: { delay: step.animationMetadata.delay }
+      }"
+    >
+      <div class="indicator" [class.danger]="error" [@indicator]="step.animationMetadata.state">
+        <mat-icon class="mi-16" [@icon]="step.animationMetadata.state">
+          {{ error ? 'close' : 'check' }}
+        </mat-icon>
+      </div>
+
+      <div class="trail" *ngIf="!noTrail">
+        <span
+          class="trail-progress"
+          [class.trail-progress-stop]="error"
+          [@trailProgress]="step.animationMetadata.state"
+        >
+        </span>
+      </div>
+    </div>
+
+    <div class="step-footer">
+      <span *ngIf="step.animationMetadata.state === 'completed'">
+        {{ step.doneDate | short }}
+      </span>
+      <span *ngIf="step.animationMetadata.state !== 'completed'">
+        {{
+          (step.animationMetadata.state === 'active' ? 'USE_CASE.IN_PROGRESS' : 'USE_CASE.PLANNED')
+            | translate
+        }}
+      </span>
+      <b>{{ getNextStepRoleLabel(step) | translate }}</b>
+    </div>
+  </div>
+</div>

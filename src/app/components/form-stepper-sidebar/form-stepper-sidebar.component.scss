@@ -1,0 +1,204 @@
+@import 'variables';
+@import 'tools';
+
+$stepper-padding-left: 30px;
+$stepper-padding-right: 24px;
+$stepper-expansion-panel-indicator-size: 12px;
+
+:host ::ng-deep {
+  .stepper {
+    display: flex;
+    flex-direction: column;
+    width: 365px;
+    height: calc(100vh - 60px);
+    padding: 26px 0 22px;
+    color: $gray13;
+    background-color: #2d323b;
+    overflow-y: auto;
+    @include custom-scrollbar;
+
+    .stepper-header {
+      padding-left: $stepper-padding-left;
+      padding-right: $stepper-padding-right;
+
+      .use-case-name {
+        max-height: 48px;
+        line-height: 24px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        word-wrap: break-word;
+      }
+
+      .progress-bar {
+        position: relative;
+
+        .mat-progress-bar {
+          height: 18px;
+          border-radius: 9px;
+
+          .mat-progress-bar-buffer {
+            background-color: $gray4;
+          }
+
+          .mat-progress-bar-fill::after {
+            background-color: $gray12;
+          }
+        }
+
+        .separator {
+          position: absolute;
+          width: 2px;
+          height: 18px;
+          top: 0px;
+          background-color: #2d323b;
+        }
+      }
+    }
+
+    .stepper-body {
+      height: 75%;
+      margin-top: 20px;
+      overflow-y: auto;
+      @include custom-scrollbar($gray6);
+
+      .progress {
+        position: absolute;
+        top: 12px;
+        right: 16px;
+        font-size: 22px;
+        color: $gray13;
+        transition: color 0.25s ease-out;
+      }
+
+      .mat-expansion-panel {
+        border-radius: 0;
+        background-color: transparent;
+        box-shadow: none;
+        color: $gray13;
+        border-top: 1px solid transparent;
+
+        &:not(.mat-expanded) + .mat-expansion-panel:not(.mat-expanded) {
+          border-top-color: #2d323b;
+        }
+
+        .mat-expansion-panel-header {
+          padding-left: $stepper-padding-left;
+          padding-right: $stepper-padding-right;
+          background-color: $gray4;
+          transition: opacity 0.335s ease-out;
+          // text-transform: uppercase;
+          opacity: 0.2;
+
+          &.mat-expanded {
+            opacity: 1;
+          }
+
+          &[aria-disabled='true'] {
+            .mat-expansion-panel-header-title {
+              margin-right: 16px + $stepper-expansion-panel-indicator-size;
+            }
+          }
+
+          .mat-expansion-panel-header-title {
+            align-items: center;
+            color: $gray13;
+          }
+
+          .mat-expansion-indicator {
+            display: none;
+          }
+        }
+
+        .mat-expansion-panel-body {
+          padding: 0;
+        }
+      }
+
+      .mat-expansion-panel-spacing {
+        margin: 0;
+      }
+
+      .mat-selection-list {
+        padding: 0;
+        outline: none;
+
+        .mat-list-option {
+          height: 45px;
+          transition: background-color 0.25s ease-out;
+
+          &.mat-list-single-selected-option {
+            background-color: $blue1;
+
+            .progress {
+              color: $gray13;
+            }
+          }
+
+          &.mat-list-item-disabled {
+            opacity: 0.2;
+            box-shadow: none;
+            background-color: transparent;
+          }
+        }
+
+        .mat-list-item-content {
+          color: $gray13;
+          padding-left: $stepper-padding-left;
+          padding-right: $stepper-padding-right;
+
+          .mat-list-text {
+            flex-direction: row;
+            align-items: center;
+            padding-right: 16px + $stepper-expansion-panel-indicator-size;
+            padding-left: 16px;
+          }
+        }
+      }
+    }
+
+    .stepper-footer-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 12px;
+
+      .stepper-footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 240px;
+        .link-buttons-group {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 25px;
+          width: 100%;
+          .link-button {
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+          }
+          .link-button-delete {
+            color: #d20000;
+            text-decoration: none;
+          }
+        }
+        button {
+          width: 100%;
+          .mat-link {
+            text-decoration: underline;
+          }
+          .button-link {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}

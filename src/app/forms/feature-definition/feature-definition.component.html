@@ -1,0 +1,195 @@
+<form [id]="formId" [formGroup]="form">
+  <section>
+    <fieldset>
+      <mat-icon
+        class="hint-icon red"
+        [matTooltip]="'FORMS.FEATURE_DEFINITION.CAMERA_INTEGRATION_TOOLTIP' | translate"
+        matTooltipPosition="left"
+      >
+        help
+      </mat-icon>
+
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label
+          >{{ 'FORMS.FEATURE_DEFINITION.CAMERA_INTEGRATION' | translate }}<sup>*</sup>:</mat-label
+        >
+        <mat-select
+          formControlName="cameraIntegration"
+          [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_CHOOSE' | translate"
+        >
+          <mat-option *ngFor="let option of cameraIntegrationOptions" [value]="option.value">
+            {{ option.label | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </fieldset>
+  </section>
+  <section>
+    <ng-container formGroupName="typeOfInspection">
+      <fieldset>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>
+            {{ 'FORMS.FEATURE_DEFINITION.TYPE_OF_INSPECTION' | translate }}
+            ({{ 'FORMS.DESCRIPTION.MULTIPLE_CHOICE_POSSIBLE' | translate }}):
+          </mat-label>
+          <mat-select
+            required
+            multiple
+            formControlName="name"
+            [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_CHOOSE' | translate"
+            (selectionChange)="onControlChange('typeOfInspection', $event.value)"
+          >
+            <mat-option *ngFor="let option of typeOfInspectionOptions" [value]="option.value">
+              {{ option.label | translate }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </fieldset>
+
+      <fieldset *ngIf="form.controls['typeOfInspection'].value.name?.includes('other')">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>{{ 'FORMS.FEATURE_DEFINITION.OTHER' | translate }}:</mat-label>
+          <input
+            matInput
+            required
+            formControlName="value"
+            [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+          />
+        </mat-form-field>
+      </fieldset>
+    </ng-container>
+
+    <fieldset>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.FEATURE_DEFINITION.FEATURE_SIZE' | translate }} (cm):</mat-label>
+        <mat-select
+          required
+          [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_CHOOSE' | translate"
+          formControlName="featureSize"
+        >
+          <mat-option *ngFor="let option of featureSizeOptions" [value]="option.value">
+            {{ option.label | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </fieldset>
+
+    <fieldset>
+      <h5 class="mb-16">
+        {{ 'FORMS.FEATURE_DEFINITION.POSITION_AND_ORIENTATION_ALWAYS_THE_SAME' | translate }}*
+      </h5>
+      <mat-radio-group aria-label="Select an option" formControlName="samePositionAndOrientation">
+        <mat-radio-button [value]="true">{{ 'LABEL.YES' | translate }}</mat-radio-button>
+        <mat-radio-button class="ml-80" [value]="false">{{
+          'LABEL.NO' | translate
+        }}</mat-radio-button>
+      </mat-radio-group>
+    </fieldset>
+
+    <fieldset optionalField>
+      <mat-icon
+        [matTooltip]="'FORMS.FEATURE_DEFINITION.CAMERA_DISTANCE_CM_TOOLTIP' | translate"
+        matTooltipPosition="left"
+        class="hint-icon"
+      >
+        help
+      </mat-icon>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label> {{ 'FORMS.FEATURE_DEFINITION.CAMERA_DISTANCE_CM' | translate }}:</mat-label>
+        <input
+          matInput
+          formControlName="cameraDistance"
+          min="0"
+          mask="separator.1"
+          [decimalMarker]="'COMMON.DECIMAL_SEPARATOR' | translate"
+          [thousandSeparator]="'COMMON.THOUSAND_SEPARATOR' | translate"
+          [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+        />
+      </mat-form-field>
+    </fieldset>
+  </section>
+
+  <section>
+    <h5 class="mb-16">{{ 'FORMS.FEATURE_DEFINITION.FEATURE_COLOR_CHANGING' | translate }}*</h5>
+
+    <fieldset>
+      <mat-radio-group aria-label="Select an option" formControlName="featureColor">
+        <mat-radio-button [value]="true">{{ 'LABEL.YES' | translate }}</mat-radio-button>
+        <mat-radio-button class="ml-80" [value]="false">{{
+          'LABEL.NO' | translate
+        }}</mat-radio-button>
+      </mat-radio-group>
+    </fieldset>
+  </section>
+
+  <section>
+    <h5 class="mb-16">{{ 'FORMS.FEATURE_DEFINITION.FEATURE_HALTED_OR_MOVING' | translate }}*</h5>
+
+    <fieldset>
+      <mat-radio-group aria-label="Select an option" formControlName="haltedOrMoving">
+        <mat-radio-button value="halted">
+          {{ 'FORMS.FEATURE_DEFINITION.HALTED' | translate }}
+        </mat-radio-button>
+        <mat-radio-button class="ml-80" value="moving">
+          {{ 'FORMS.FEATURE_DEFINITION.MOVING' | translate }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </fieldset>
+  </section>
+
+  <section>
+    <ng-container formGroupName="positionInVehicle">
+      <fieldset>
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>{{ 'FORMS.FEATURE_DEFINITION.POSITION_IN_VEHICLE' | translate }}:</mat-label>
+          <mat-select
+            required
+            formControlName="name"
+            [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_CHOOSE' | translate"
+            (selectionChange)="onControlChange('positionInVehicle', $event.value)"
+          >
+            <mat-option *ngFor="let option of positionInVehicleOptions" [value]="option.value">
+              {{ option.label | translate }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </fieldset>
+
+      <fieldset *ngIf="form.controls['positionInVehicle'].value.name === 'other'">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>{{ 'FORMS.FEATURE_DEFINITION.OTHER' | translate }}:</mat-label>
+          <input
+            matInput
+            required
+            formControlName="value"
+            [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+          />
+        </mat-form-field>
+      </fieldset>
+    </ng-container>
+
+    <fieldset>
+      <mat-icon
+        [matTooltip]="'FORMS.FEATURE_DEFINITION.NUMBER_OF_VARIANTS_TOOLTIP' | translate"
+        matTooltipPosition="left"
+        class="hint-icon"
+      >
+        help
+      </mat-icon>
+
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.FEATURE_DEFINITION.NUMBER_OF_VARIANTS' | translate }}:</mat-label>
+        <input
+          matInput
+          required
+          formControlName="numberOfVariants"
+          step="1"
+          min="0"
+          max="1000"
+          type="number"
+          [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+        />
+      </mat-form-field>
+    </fieldset>
+  </section>
+</form>

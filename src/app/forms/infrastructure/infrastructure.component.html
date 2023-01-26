@@ -1,0 +1,49 @@
+<form [id]="formId" [formGroup]="form">
+  <section>
+    <h5 class="mb-16">{{ 'FORMS.INFRASTRUCTURE.NSI_SOCKET_AVAILABLE' | translate }}*</h5>
+
+    <fieldset>
+      <mat-radio-group aria-label="Select an option" formControlName="nsiSocketAvailable">
+        <mat-radio-button [value]="true">{{ 'LABEL.YES' | translate }}</mat-radio-button>
+        <mat-radio-button class="ml-80" [value]="false">{{
+          'LABEL.NO' | translate
+        }}</mat-radio-button>
+        <mat-radio-button class="ml-80" value="unknown">{{
+          'LABEL.UNKNOWN' | translate
+        }}</mat-radio-button>
+      </mat-radio-group>
+    </fieldset>
+  </section>
+
+  <section>
+    <h5 class="mb-16">{{ 'FORMS.INFRASTRUCTURE.POWER_AVAILABLE' | translate }}*</h5>
+
+    <fieldset>
+      <mat-radio-group aria-label="Select an option" formControlName="powerAvailable">
+        <mat-radio-button [value]="true">{{ 'LABEL.YES' | translate }}</mat-radio-button>
+        <mat-radio-button class="ml-80" [value]="false">{{
+          'LABEL.NO' | translate
+        }}</mat-radio-button>
+        <mat-radio-button class="ml-80" value="unknown">{{
+          'LABEL.UNKNOWN' | translate
+        }}</mat-radio-button>
+      </mat-radio-group>
+    </fieldset>
+  </section>
+
+  <section>
+    <h5 class="mb-16">{{ 'FORMS.INFRASTRUCTURE.POE_AVAILABLE' | translate }}*</h5>
+
+    <fieldset>
+      <mat-radio-group aria-label="Select an option" formControlName="poeAvailable">
+        <mat-radio-button [value]="true">{{ 'LABEL.YES' | translate }}</mat-radio-button>
+        <mat-radio-button class="ml-80" [value]="false">{{
+          'LABEL.NO' | translate
+        }}</mat-radio-button>
+        <mat-radio-button class="ml-80" value="unknown">{{
+          'LABEL.UNKNOWN' | translate
+        }}</mat-radio-button>
+      </mat-radio-group>
+    </fieldset>
+  </section>
+</form>

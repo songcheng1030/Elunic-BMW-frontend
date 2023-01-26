@@ -1,0 +1,74 @@
+<form [id]="formId" [formGroup]="form">
+  <section>
+    <div class="title">{{ 'FORMS.USE_CASE_ORDER.TOTAL_COSTS' | translate }}</div>
+    <app-cost-estimation [offer]="configurator.getStep('offer')"></app-cost-estimation>
+    <fieldset class="d-flex align-items-center">
+      <mat-icon
+        [matTooltip]="'FORMS.USE_CASE_ORDER.USE_CASE_COSTS_TOOLTIP' | translate"
+        matTooltipPosition="left"
+      >
+        info
+      </mat-icon>
+      <mat-label>{{ 'FORMS.USE_CASE_ORDER.EXACT_FIGURE_CHANGE' | translate }}:</mat-label>
+    </fieldset>
+  </section>
+
+  <section>
+    <div class="title">{{ 'FORMS.USE_CASE_ORDER.GO_LIVE_DATE' | translate }}</div>
+    <fieldset>
+      <mat-icon>
+        <img [src]="getIconUrl()" width="30px" />
+      </mat-icon>
+
+      <div *ngIf="!showError">
+        <div class="same-date">{{ implementationDate.completionDate | shortDate }}</div>
+        <div class="description">
+          {{
+            'FORMS.USE_CASE_ORDER.IMPLEMENTATION_ON_DATE'
+              | translate: { completionDate: implementationDate.completionDate | shortDate }
+          }}
+        </div>
+      </div>
+
+      <div *ngIf="showError">
+        <div class="d-flex" *ngIf="!acceptNewImplementationDate.value">
+          <div class="completion-date">
+            {{ implementationDate.completionDate | shortDate }}
+          </div>
+          <img class="mr-8 ml-8 center" src="assets/icons/right_arrow.svg" width="10px" />
+          <div class="implementation-date">
+            {{ implementationDate.timelineForImplementation | shortDate }}
+          </div>
+        </div>
+        <div *ngIf="acceptNewImplementationDate.value" class="same-date">
+          {{ implementationDate.timelineForImplementation | shortDate }}
+        </div>
+        <div class="description">
+          {{
+            'FORMS.USE_CASE_ORDER.NOT_IMPLEMENTATION_ON_DATE'
+              | translate
+                : {
+                    completionDate: implementationDate.completionDate | shortDate,
+                    timelineForImplementation:
+                      implementationDate.timelineForImplementation | shortDate
+                  }
+          }}
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset *ngIf="showError">
+      <mat-checkbox color="primary" required formControlName="acceptNewImplementationDate">
+        {{
+          'FORMS.USE_CASE_ORDER.ACCEPT_NEW_IMPLEMENTATION_DATE'
+            | translate
+              : {
+                  completionDate: implementationDate.completionDate | shortDate,
+                  timelineForImplementation:
+                    implementationDate.timelineForImplementation | shortDate
+                }
+        }}
+      </mat-checkbox>
+    </fieldset>
+  </section>
+</form>

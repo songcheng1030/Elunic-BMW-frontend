@@ -1,0 +1,38 @@
+@import 'variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.toolbar-container {
+  display: flex;
+  background-color: $gray12;
+  align-items: baseline;
+  padding: 20px 120px 10px 120px;
+}
+
+.status-container {
+  background-color: $gray11;
+  padding: 20px 120px 20px 120px;
+}
+
+.table-container {
+  display: flex;
+  flex-grow: 1;
+}
+
+.search-container {
+  display: flex;
+  align-items: flex-end;
+  padding: 20px 120px 10px 120px;
+  app-search {
+    margin: auto 0px;
+    display: block;
+    width: 340px;
+  }
+  app-step-filter {
+    margin-left: 5px;
+  }
+}

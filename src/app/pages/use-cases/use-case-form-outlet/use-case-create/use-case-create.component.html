@@ -1,0 +1,52 @@
+<app-form-container>
+  <ng-container header>
+    <div class="d-flex align-items-center mt-20">
+      <h1 class="mat-h1">
+        {{ tabs[selectedTabIndex].title | translate }}
+      </h1>
+
+      <mat-icon
+        class="hint mi-22 ml-14"
+        matTooltipPosition="right"
+        *ngIf="tabs[selectedTabIndex].hint"
+        [matTooltip]="tabs[selectedTabIndex].hint || '' | translate"
+      >
+        help
+      </mat-icon>
+    </div>
+  </ng-container>
+  <ng-container body-wide>
+    <mat-tab-group [selectedIndex]="selectedTabIndex">
+      <mat-tab>
+        <app-use-case-description
+          class="d-flex form-content"
+          [formId]="tabs[0].form"
+          [hideOptionalFields]="configurator.showMandatoryOnly"
+        ></app-use-case-description>
+      </mat-tab>
+
+      <mat-tab>
+        <app-project-planning
+          class="d-flex form-content"
+          [formId]="tabs[1].form"
+          [hideOptionalFields]="configurator.showMandatoryOnly"
+        ></app-project-planning>
+      </mat-tab>
+
+      <mat-tab>
+        <app-feature-definition
+          class="d-flex form-content"
+          [formId]="tabs[2].form"
+          [hideOptionalFields]="configurator.showMandatoryOnly"
+        ></app-feature-definition>
+      </mat-tab>
+
+      <mat-tab>
+        <app-use-case-annotations
+          [formId]="tabs[3].form"
+          [hideOptionalFields]="configurator.showMandatoryOnly"
+        ></app-use-case-annotations>
+      </mat-tab>
+    </mat-tab-group>
+  </ng-container>
+</app-form-container>

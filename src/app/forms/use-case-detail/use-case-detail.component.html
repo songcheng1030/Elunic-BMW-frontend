@@ -1,0 +1,87 @@
+<form [id]="formId" [formGroup]="form">
+  <section>
+    <h5 class="mb-16">{{ 'FORMS.VARIANTS.TECHNICAL_TACT' | translate }}*</h5>
+
+    <fieldset>
+      <mat-radio-group aria-label="Select an option" formControlName="technicalTact">
+        <mat-radio-button [value]="true">{{ 'LABEL.YES' | translate }}</mat-radio-button>
+        <mat-radio-button class="ml-80" [value]="false">{{
+          'LABEL.NO' | translate
+        }}</mat-radio-button>
+      </mat-radio-group>
+    </fieldset>
+  </section>
+
+  <section>
+    <h5 class="mb-16">{{ 'FORMS.VARIANTS.ANONYMIZATION_NECESSARY' | translate }}*</h5>
+
+    <fieldset>
+      <mat-radio-group aria-label="Select an option" formControlName="anonymizationNecessary">
+        <mat-radio-button [value]="true">{{ 'LABEL.YES' | translate }}</mat-radio-button>
+        <mat-radio-button class="ml-80" [value]="false">{{
+          'LABEL.NO' | translate
+        }}</mat-radio-button>
+      </mat-radio-group>
+    </fieldset>
+  </section>
+
+  <section>
+    <h5 class="mb-16">{{ 'FORMS.VARIANTS.ARCHIVING_IMAGES' | translate }}*</h5>
+
+    <fieldset formGroupName="archivingImages">
+      <mat-icon
+        class="hint-icon"
+        [matTooltip]="'FORMS.VARIANTS.ARCHIVING_IMAGES_TOOLTIP' | translate"
+        matTooltipPosition="left"
+      >
+        help
+      </mat-icon>
+
+      <mat-radio-group
+        aria-label="Select an option"
+        formControlName="value"
+        (change)="onArchivingImagesChange($event.value)"
+      >
+        <mat-radio-button [value]="true">{{ 'LABEL.YES' | translate }}</mat-radio-button>
+        <mat-radio-button class="ml-80" [value]="false">{{
+          'LABEL.NO' | translate
+        }}</mat-radio-button>
+      </mat-radio-group>
+
+      <mat-form-field
+        *ngIf="archivingImagesCtrl.value.value"
+        appearance="outline"
+        floatLabel="always"
+        class="mt-20"
+      >
+        <mat-label>{{ 'FORMS.VARIANTS.ARCHIVING_IMAGES_DURATION' | translate }}:</mat-label>
+        <input
+          matInput
+          required
+          type="number"
+          min="1"
+          formControlName="months"
+          [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+        />
+      </mat-form-field>
+    </fieldset>
+  </section>
+
+  <section>
+    <fieldset>
+      <mat-icon
+        class="hint-icon"
+        [matTooltip]="'FORMS.VARIANTS.EMERGENCY_CONCEPT_TOOLTIP' | translate"
+        matTooltipPosition="left"
+      >
+        help
+      </mat-icon>
+
+      <div class="d-flex">
+        <mat-checkbox color="primary" formControlName="emergencyConcept">
+          <span> {{ 'FORMS.VARIANTS.EMERGENCY_CONCEPT' | translate }}* </span>
+        </mat-checkbox>
+      </div>
+    </fieldset>
+  </section>
+</form>

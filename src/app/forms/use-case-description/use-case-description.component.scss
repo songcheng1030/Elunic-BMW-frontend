@@ -1,0 +1,6 @@
+@import 'variables';
+@import 'tools';
+
+:host ::ng-deep .mat-tooltip {
+  white-space: pre-wrap;
+}

@@ -1,0 +1,29 @@
+<div class="table-wrapper">
+  <ng-container *ngIf="formStep">
+    <div class="d-flex align-items-center mb-16">
+      <span>
+        {{ 'FORMS.FEASIBILITY_CHECK.USE_CASE_FEASIBLE' | translate }}
+      </span>
+      <a
+        class="ml-auto font-bold text-decoration-none"
+        [routerLink]="['/use-cases', 'edit', useCase.id, getStepUrl('feasibility_check')]"
+        [queryParams]="{ 'tab-index': 0 }"
+      >
+        {{ 'USE_CASE.VIEW_FORM' | translate }}
+      </a>
+    </div>
+
+    <mat-card class="card-info">
+      <mat-list>
+        <div fxLayout="row" class="list-items">
+          <div class="title" fxFlex="40">
+            {{ 'FORMS.FEASIBILITY_CHECK.USE_CASE_FEASIBLE' | translate }}
+          </div>
+          <div fxFlex="60">
+            {{ (formStep?.feasibilityCheck?.value ? 'LABEL.YES' : 'LABEL.NO') | translate }}
+          </div>
+        </div>
+      </mat-list>
+    </mat-card>
+  </ng-container>
+</div>

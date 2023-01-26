@@ -1,0 +1,39 @@
+@import 'variables';
+@import 'tools';
+
+:host ::ng-deep {
+  .mat-grid-tile .mat-figure {
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 70%;
+  }
+
+  .description {
+    white-space: pre-wrap;
+  }
+
+  .title {
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 25px;
+  }
+
+  .same-date {
+    font-size: 16px;
+    color: #1aab24;
+  }
+
+  .completion-date {
+    font-size: 16px;
+    text-decoration: line-through;
+  }
+
+  .implementation-date {
+    font-size: 16px;
+    color: #ff470c;
+  }
+
+  .description {
+    margin-top: 15px;
+  }
+}

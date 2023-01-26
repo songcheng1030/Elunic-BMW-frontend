@@ -1,0 +1,68 @@
+<ng-container [formGroup]="form">
+  <h5
+    *ngIf="required || requireInformed || (configurator.showMandatoryOnly$ | async) === false"
+    class="mb-16"
+  >
+    {{ title }}
+  </h5>
+
+  <fieldset [optionalField]="required">
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>{{ 'FORMS.PROJECT_PLANNING.NAME' | translate }}:</mat-label>
+      <input
+        matInput
+        [required]="required"
+        formControlName="name"
+        [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+      />
+    </mat-form-field>
+  </fieldset>
+
+  <fieldset [optionalField]="required">
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>{{ 'FORMS.PROJECT_PLANNING.DEPARTMENT' | translate }}:</mat-label>
+      <input
+        matInput
+        [required]="required"
+        formControlName="department"
+        [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+      />
+    </mat-form-field>
+  </fieldset>
+
+  <ng-container *ngIf="functionOptions" formGroupName="function">
+    <fieldset [optionalField]="required">
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.PROJECT_PLANNING.FUNCTION' | translate }}:</mat-label>
+        <mat-select
+          [required]="required"
+          formControlName="name"
+          (valueChange)="onFunctionChange($event)"
+          [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_CHOOSE' | translate"
+        >
+          <mat-option *ngFor="let option of functionOptions" [value]="option.value">
+            {{ option.label | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </fieldset>
+
+    <fieldset *ngIf="form.controls['function'].value.name === 'other'" [optionalField]="required">
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.PROJECT_PLANNING.OTHER' | translate }}:</mat-label>
+        <input
+          matInput
+          [required]="required"
+          formControlName="value"
+          [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+        />
+      </mat-form-field>
+    </fieldset>
+  </ng-container>
+
+  <fieldset [optionalField]="requireInformed" *ngIf="requireInformed">
+    <mat-checkbox color="primary" formControlName="informed" [required]="requireInformed">
+      {{ ('FORMS.PROJECT_PLANNING.INFORMED' | translate) + (requireInformed ? '*' : '') }}
+    </mat-checkbox>
+  </fieldset>
+</ng-container>

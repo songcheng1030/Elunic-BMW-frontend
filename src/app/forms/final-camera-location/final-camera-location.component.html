@@ -1,0 +1,58 @@
+<form [id]="formId" [formGroup]="form">
+  <section>
+    <fieldset>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.CAMERA_LOCATION.BUILDING' | translate }}:</mat-label>
+        <input
+          matInput
+          required
+          formControlName="building"
+          [placeholder]="'FORMS.CAMERA_LOCATION.BUILDING' | translate"
+        />
+        <mat-error *ngIf="form.controls.building.errors?.pattern">
+          {{ 'FORMS.ERROR_MESSAGES.DOT_NOT_ALLOWED' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </fieldset>
+    <fieldset>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.CAMERA_LOCATION.LINE' | translate }}:</mat-label>
+        <input
+          matInput
+          required
+          formControlName="line"
+          [placeholder]="'FORMS.CAMERA_LOCATION.LINE' | translate"
+        />
+        <mat-error *ngIf="form.controls.line.errors?.pattern">
+          {{ 'FORMS.ERROR_MESSAGES.DOT_NOT_ALLOWED' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </fieldset>
+    <fieldset>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.CAMERA_LOCATION.TACT' | translate }}:</mat-label>
+        <input
+          matInput
+          required
+          formControlName="position"
+          [placeholder]="'FORMS.CAMERA_LOCATION.TACT' | translate"
+        />
+        <mat-error *ngIf="form.controls.position.errors?.pattern">
+          {{ 'FORMS.ERROR_MESSAGES.DOT_NOT_ALLOWED' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </fieldset>
+    <fieldset>
+      <h5 class="mb-16">
+        {{ 'FORMS.CAMERA_LOCATION.MECHANICAL_STRUCTURE_FOR_CAMERA' | translate }}*
+      </h5>
+
+      <mat-radio-group aria-label="Select an option" formControlName="mechanicalStructure">
+        <mat-radio-button [value]="true">{{ 'LABEL.YES' | translate }}</mat-radio-button>
+        <mat-radio-button class="ml-80" [value]="false">{{
+          'LABEL.NO' | translate
+        }}</mat-radio-button>
+      </mat-radio-group>
+    </fieldset>
+  </section>
+</form>

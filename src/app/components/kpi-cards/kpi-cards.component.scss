@@ -1,0 +1,84 @@
+@import 'variables';
+@import 'tools';
+
+:host ::ng-deep {
+  .table-wrapper {
+    flex-grow: 1;
+
+    .card-info {
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      margin-bottom: 30px;
+
+      &:last-of-type {
+        margin-bottom: 20px;
+      }
+
+      .mat-list-base {
+        padding: 10px;
+        width: 100%;
+
+        .mat-list-item {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          height: unset;
+          min-height: 48px;
+
+          span:first-of-type {
+            font-weight: 600;
+            flex: 0 0 40%;
+          }
+
+          &:not(:last-of-type) {
+            border-bottom: 1px solid $gray6;
+          }
+
+          .object-view {
+            margin: 10px 0;
+            width: 100%;
+            .title {
+              margin-bottom: 10px;
+              font-weight: 600;
+              flex: 0 0 100%;
+            }
+            .content {
+              display: flex;
+              margin: 4px 0px;
+              div:first-of-type {
+                flex: 0 0 40%;
+              }
+
+              .item {
+                display: flex;
+                flex-direction: column;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.plant-status-card {
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%),
+    0px 1px 3px 0px rgb(0 0 0 / 12%);
+  border-radius: 4px;
+  padding: 10px;
+  background-color: $gray12;
+  text-align: center;
+  height: 100%;
+}
+
+.status-title {
+  font-size: 9px;
+  color: $gray5;
+  font-weight: bold;
+}
+
+.status-day {
+  font-size: 10px;
+  color: $gray7;
+}

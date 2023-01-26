@@ -1,0 +1,29 @@
+@import 'variables';
+
+:host {
+  .file-uploader-dropdown {
+    padding: 4px;
+    margin: 20px auto;
+    border: dashed 2px #8e8e8e;
+    height: 150px;
+  }
+}
+:host ::ng-deep {
+  ngx-file-drop {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  .ngx-file-drop__drop-zone {
+    border: 0px !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  .ngx-file-drop__content {
+    width: 100% !important;
+    height: 100% !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    color: #292e36 !important;
+    line-height: normal !important;
+  }
+}

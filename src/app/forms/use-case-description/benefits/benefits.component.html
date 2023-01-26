@@ -1,0 +1,78 @@
+<form class="p-0" [formGroup]="form">
+  <fieldset *ngFor="let field of fields | keyvalue: fieldsKeyValueOrder">
+    <div class="d-flex flex-column">
+      <mat-icon
+        *ngIf="field.value.tooltip"
+        [matTooltip]="field.value.tooltip | translate"
+        matTooltipPosition="left"
+        class="main-field-tooltip hint-icon"
+      >
+        help
+      </mat-icon>
+      <mat-checkbox
+        color="primary"
+        [disabled]="isDisabled"
+        [checked]="openedFields.includes(field.key)"
+        (change)="onSelect(field.key, $event.checked)"
+      >
+        <span>
+          {{ field.value.label | translate }}
+        </span>
+      </mat-checkbox>
+
+      <ng-container [formGroupName]="field.key" *ngIf="openedFields.includes(field.key)">
+        <mat-form-field
+          *ngFor="let subfield of field.value.subfields"
+          class="mt-8"
+          appearance="outline"
+          floatLabel="always"
+        >
+          <mat-icon
+            *ngIf="subfield.tooltip"
+            [matTooltip]="subfield.tooltip | translate"
+            matTooltipPosition="left"
+            class="hint-icon"
+          >
+            help
+          </mat-icon>
+          <mat-label>{{ subfield.label | translate }}:</mat-label>
+          <ng-container [ngSwitch]="subfield.type">
+            <input
+              *ngSwitchCase="'number'"
+              matInput
+              mask="separator.2"
+              [decimalMarker]="'COMMON.DECIMAL_SEPARATOR' | translate"
+              [thousandSeparator]="'COMMON.THOUSAND_SEPARATOR' | translate"
+              [formControlName]="subfield.name"
+              [placeholder]="
+                subfield.placeholder || 'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate
+              "
+            />
+            <input
+              *ngSwitchCase="'int'"
+              matInput
+              step="1"
+              min="0"
+              mask="separator.0"
+              [thousandSeparator]="'COMMON.THOUSAND_SEPARATOR' | translate"
+              [allowNegativeNumbers]="false"
+              [formControlName]="subfield.name"
+              [placeholder]="
+                subfield.placeholder || 'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate
+              "
+            />
+            <input
+              *ngSwitchDefault
+              type="text"
+              matInput
+              [formControlName]="subfield.name"
+              [placeholder]="
+                subfield.placeholder || 'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate
+              "
+            />
+          </ng-container>
+        </mat-form-field>
+      </ng-container>
+    </div>
+  </fieldset>
+</form>

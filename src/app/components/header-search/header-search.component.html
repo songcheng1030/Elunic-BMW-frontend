@@ -1,0 +1,5 @@
+<div class="search-container">
+  <input #input class="search-input" type="text" [(ngModel)]="value" [placeholder]="placeholder" />
+  <mat-icon class="cancel-icon" *ngIf="value.length > 0" (click)="reset($event)">cancel</mat-icon>
+  <mat-icon class="search-icon">search</mat-icon>
+</div>

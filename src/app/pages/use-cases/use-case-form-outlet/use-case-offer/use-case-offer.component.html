@@ -1,0 +1,38 @@
+<app-form-container>
+  <ng-container header>
+    <h1 class="mat-h1 mt-20">
+      {{ tabs[selectedTabIndex].title | translate }}
+    </h1>
+  </ng-container>
+  <ng-container body>
+    <mat-tab-group [selectedIndex]="selectedTabIndex">
+      <mat-tab>
+        <app-use-case-implementation-feasibility-check
+          [formId]="tabs[0].form"
+          [hideOptionalFields]="configurator.showMandatoryOnly"
+        ></app-use-case-implementation-feasibility-check>
+      </mat-tab>
+
+      <mat-tab>
+        <app-use-case-complexity-definition
+          [formId]="tabs[0].form"
+          [hideOptionalFields]="configurator.showMandatoryOnly"
+        ></app-use-case-complexity-definition>
+      </mat-tab>
+
+      <mat-tab>
+        <app-camera-position-definition
+          [formId]="tabs[0].form"
+          [hideOptionalFields]="configurator.showMandatoryOnly"
+        ></app-camera-position-definition>
+      </mat-tab>
+
+      <mat-tab>
+        <app-estimated-price
+          [formId]="tabs[0].form"
+          [hideOptionalFields]="configurator.showMandatoryOnly"
+        ></app-estimated-price>
+      </mat-tab>
+    </mat-tab-group>
+  </ng-container>
+</app-form-container>

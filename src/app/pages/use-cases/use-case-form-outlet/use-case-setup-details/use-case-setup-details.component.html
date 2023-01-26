@@ -1,0 +1,48 @@
+<app-form-container>
+  <ng-container header>
+    <h1 class="mat-h1 mt-20">
+      {{ tabs[selectedTabIndex].title | translate }}
+    </h1>
+  </ng-container>
+  <ng-container body>
+    <mat-tab-group [selectedIndex]="selectedTabIndex">
+      <mat-tab>
+        <ng-template matTabContent>
+          <app-moniker [form]="formMap['moniker']"></app-moniker>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template matTabContent>
+          <app-nsi-plug [form]="formMap['nsi']"></app-nsi-plug>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template matTabContent>
+          <app-ips-plc-trigger [form]="formMap['ipsPlcTrigger']"></app-ips-plc-trigger>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template matTabContent>
+          <app-hardware-inventory [form]="formMap['hardwareInventory']"></app-hardware-inventory>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template matTabContent>
+          <app-hardware-setup-image
+            [form]="formMap['hardwareSetupImage']"
+          ></app-hardware-setup-image>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template matTabContent>
+          <app-output-system [form]="formMap['outputSystem']"></app-output-system>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </ng-container>
+</app-form-container>

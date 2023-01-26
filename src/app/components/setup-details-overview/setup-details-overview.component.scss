@@ -1,0 +1,11 @@
+.editor {
+  min-width: 600px;
+  width: 100%;
+  margin: auto;
+}
+
+:host ::ng-deep {
+  .tox-tinymce {
+    border: 0;
+  }
+}

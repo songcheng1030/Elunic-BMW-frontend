@@ -1,0 +1,10 @@
+@import 'variables';
+@import 'tools';
+
+:host ::ng-deep {
+  .mat-grid-tile .mat-figure {
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 70%;
+  }
+}

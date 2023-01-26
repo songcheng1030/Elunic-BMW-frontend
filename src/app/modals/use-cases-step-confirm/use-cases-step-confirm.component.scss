@@ -1,0 +1,43 @@
+@import 'variables';
+@import 'tools';
+
+:host ::ng-deep {
+  .mat-dialog-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .title {
+      font-size: 14px;
+    }
+
+    .sub-title {
+      font-size: 12px;
+    }
+  }
+
+  .confirm-btn {
+    margin: 10px auto;
+    font-weight: normal;
+    color: #fff;
+    background-color: #0068da;
+  }
+
+  p {
+    margin: 15px 20px 0px;
+    font-weight: 400;
+    text-align: center;
+    white-space: pre-wrap;
+  }
+
+  .mat-dialog-actions {
+    flex-direction: column;
+
+    p {
+      margin-bottom: 15px;
+      font-size: 12px;
+      color: #cacaca;
+    }
+  }
+}

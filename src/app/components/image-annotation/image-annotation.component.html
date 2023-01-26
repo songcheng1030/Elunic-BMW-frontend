@@ -1,0 +1,91 @@
+<form [formGroup]="form" class="p-0">
+  <mat-table [dataSource]="dataSource" matSort>
+    <!-- Row definitions -->
+    <mat-header-row *matHeaderRowDef="columnNames"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columnNames"></mat-row>
+
+    <!-- Column definitions -->
+    <ng-container matColumnDef="image">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let control; let i = index" class="d-flex">
+        <img
+          height="50px"
+          class="m-auto pointer"
+          (click)="lightbox.open(i, galleryId)"
+          [src]="control.value.image"
+        />
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="isOK">
+      <mat-header-cell *matHeaderCellDef>
+        {{ 'FORMS.EXAMPLE_IMAGES.OK_NOK' | translate }}*
+      </mat-header-cell>
+      <mat-cell *matCellDef="let control" [formGroup]="control">
+        <ng-container formGroupName="metadata">
+          <mat-radio-group formControlName="isOK" class="content-wrapper">
+            <mat-radio-button [value]="true">
+              {{ 'FORMS.EXAMPLE_IMAGES.OK' | translate }}
+            </mat-radio-button>
+            <mat-radio-button [value]="false">
+              {{ 'FORMS.EXAMPLE_IMAGES.NOK' | translate }}
+            </mat-radio-button>
+          </mat-radio-group>
+        </ng-container>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        <mat-icon
+          class="hint mi-20 mr-8"
+          matTooltipPosition="left"
+          [matTooltip]="'FORMS.EXAMPLE_IMAGES.DESCRIPTION_TOOLTIP' | translate"
+          (click)="$event.stopPropagation()"
+        >
+          help
+        </mat-icon>
+
+        {{ 'FORMS.EXAMPLE_IMAGES.DESCRIPTION' | translate }}*
+      </mat-header-cell>
+      <mat-cell *matCellDef="let control" [formGroup]="control">
+        <mat-form-field appearance="outline" floatLabel="always" formGroupName="metadata">
+          <textarea
+            matInput
+            required
+            formControlName="description"
+            [placeholder]="'FORMS.DESCRIPTION.DESCRIPTION' | translate"
+          ></textarea>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Date</mat-header-cell>
+      <mat-cell *matCellDef="let control">
+        {{ control.value.createdAt | short }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="remove">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let control; let i = index">
+        <button (click)="removeAttachment(i)" [disabled]="isDisabled" mat-icon-button>
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+  </mat-table>
+</form>
+
+<ng-template
+  #itemTemplate
+  let-index="index"
+  let-type="type"
+  let-data="data"
+  let-currIndex="currIndex"
+>
+  <div *ngIf="type === 'image' && index === currIndex" class="gallery-item-title">
+    <span> {{ data?.title$ | async }} </span>
+  </div>
+</ng-template>

@@ -1,0 +1,18 @@
+<div class="table-wrapper">
+  <ng-container>
+    <div class="d-flex align-items-center mb-16">
+      <span class="font-14 font-bold">
+        {{ 'KPIS.TITLE' | translate }}
+      </span>
+    </div>
+    <div fxLayout="row wrap" fxLayoutGap="6px grid">
+      <div *ngFor="let kpi of kpis; let i = index" fxFlex="11%" fxFlex.sm="33%">
+        <div class="plant-status-card">
+          <div class="status-title">{{ kpi.title | translate }}</div>
+          <div class="font-14 font-bold m-10">{{ kpi.time }}</div>
+          <div class="status-day">{{ 'KPIS.DAYS' | translate }}</div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

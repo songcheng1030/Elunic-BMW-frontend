@@ -1,0 +1,100 @@
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+  DOCKER_HOST: "tcp://127.0.0.1:2375"
+
+services:
+  - name: docker:stable-dind
+    command:
+      [
+        "--registry-mirror",
+        "http://dockerhub-cache.dockerhub-cache.svc.cluster.local",
+      ]
+
+stages:
+  # - test
+  - build
+  - push
+  - deploy
+
+# test aiqx-use-cases:
+#   stage: test
+#   image: elunic/node-angular-chrome:node14-angular10
+#   script:
+#     - npm ci --unsafe
+#     - npm run test:ci
+#     - "echo Overall code coverage: $(cat ./coverage/coverage-summary.json | jq '.total | map(.pct) | add/length') %"
+#   coverage: '/Overall code coverage: ([\d.]+) %/'
+#   artifacts:
+#     name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+#     reports:
+#       junit: test-reports/*.xml
+#     paths:
+#       - coverage/
+#       - test-reports/
+
+build aiqx-use-cases:
+  stage: build
+  image: docker:stable
+  tags:
+    - kubernetes
+  # Run for tags that match a version tag [wh]
+  script:
+    - apk add jq sed
+    # Construct APP_NAME = <name from package.json>
+    - APP_NAME=`cat ./package.json | jq -r .name`
+    # APP_VERSION = taken from commit tag (the part after the v)
+    - docker build -f Dockerfile --build-arg BUILD_ENVIRONMENT=production -t ${APP_NAME}:${CI_COMMIT_SHA} .
+    - docker save ${APP_NAME}:${CI_COMMIT_SHA} | gzip -1 > ${ARTIFACTS_BASE_PATH:-./}image.tar.gz
+  artifacts:
+    expire_in: 1 hrs
+    paths:
+      - ${ARTIFACTS_BASE_PATH:-./}image.tar.gz
+
+# push aiqx-use-cases:
+#   stage: push
+#   image: docker:stable
+#   # Run for tags that match a version tag [wh]
+#   only:
+#     - /^v[0-9]+\.[0-9]+\.[0-9]+.*$/
+#   script:
+#     - apk add jq sed
+#     # Construct APP_NAME = <name from package.json>
+#     - APP_NAME=`cat ./package.json | jq -r .name`
+#     # APP_VERSION = taken from commit tag (the part after the v)
+#     - APP_VERSION=`echo $CI_COMMIT_TAG | sed 's/^v//'`
+#     - ls -al $ARTIFACTS_BASE_PATH
+#     - gunzip -c ${ARTIFACTS_BASE_PATH:-./}image.tar.gz | docker load
+#     - docker login -u $CI_DOCKERREG_USER -p $CI_DOCKERREG_PASSWORD $CI_DOCKERREG_URL
+#     - docker tag ${APP_NAME}:${CI_COMMIT_SHA} $CI_DOCKERREG_IMAGE_URL/$APP_NAME:$APP_VERSION
+#     - docker push $CI_DOCKERREG_IMAGE_URL/$APP_NAME:$APP_VERSION
+
+push aiqx-use-cases:
+  stage: push
+  image: docker:stable
+  tags:
+    - kubernetes
+  # Run for tags that match a version tag [wh]
+  only:
+    - master
+    - testing
+  script:
+    - apk add jq sed
+    - APP_NAME=`cat ./package.json | jq -r .name`
+    - ls -al $ARTIFACTS_BASE_PATH
+    - gunzip -c ${ARTIFACTS_BASE_PATH:-./}image.tar.gz | docker load
+    - if [ "$CI_COMMIT_BRANCH" = "master" ]; then DOCKER_IMAGE_NAME_POSTFIX=""; else DOCKER_IMAGE_NAME_POSTFIX="-$CI_COMMIT_BRANCH"; fi
+    - docker login -u $DOCKER_USERNAME_ELUNIC -p $DOCKER_PASSWORD_ELUNIC $DOCKER_REGISTRY_ELUNIC
+    - docker tag ${APP_NAME}:${CI_COMMIT_SHA} $DOCKER_REGISTRY_ELUNIC/$APP_NAME$DOCKER_IMAGE_NAME_POSTFIX:latest
+    - docker push $DOCKER_REGISTRY_ELUNIC/$APP_NAME$DOCKER_IMAGE_NAME_POSTFIX:latest
+
+deploy:
+  stage: deploy
+  image: alpine:latest
+  tags:
+    - kubernetes
+  only:
+    refs:
+      - master
+  script:
+    - wget -O - "$K8S_UPDATE_URL"

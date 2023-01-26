@@ -1,0 +1,205 @@
+<form [id]="formId" [formGroup]="form">
+  <section>
+    <fieldset>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.DESCRIPTION.INSPECTION_FEATURE' | translate }}:</mat-label>
+        <input
+          matInput
+          required
+          formControlName="name"
+          [placeholder]="'FORMS.DESCRIPTION.NAME' | translate"
+        />
+        <mat-error *ngIf="form.controls.name.errors?.pattern">
+          {{ 'FORMS.ERROR_MESSAGES.DOT_NOT_ALLOWED' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </fieldset>
+
+    <fieldset>
+      <mat-icon
+        [matTooltip]="'FORMS.DESCRIPTION.INSPECTION_DESCRIPTION_TOOLTIP' | translate"
+        matTooltipPosition="left"
+        class="hint-icon"
+        >help</mat-icon
+      >
+
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.DESCRIPTION.INSPECTION_DESCRIPTION' | translate }}:</mat-label>
+        <textarea
+          matInput
+          required
+          formControlName="description"
+          [placeholder]="'FORMS.DESCRIPTION.DESCRIPTION' | translate"
+        ></textarea>
+        <mat-hint align="end">
+          {{ description.value?.length || 0 }}/{{ descriptionMaxLength }}
+        </mat-hint>
+      </mat-form-field>
+    </fieldset>
+  </section>
+
+  <section>
+    <fieldset>
+      <mat-icon
+        [matTooltip]="'FORMS.DESCRIPTION.COSTS_FOR_USE_CASE_TOOLTIP' | translate: costs"
+        matTooltipPosition="left"
+        class="hint-icon"
+        >help</mat-icon
+      >
+      <div class="d-flex h-20">
+        <mat-checkbox color="primary" formControlName="costsCoveredByDepartment">
+          {{ 'FORMS.DESCRIPTION.COSTS_FOR_USE_CASE' | translate }}*
+        </mat-checkbox>
+      </div>
+    </fieldset>
+  </section>
+
+  <section>
+    <h5 class="mb-16">{{ 'FORMS.DESCRIPTION.LOCATION' | translate }}</h5>
+
+    <fieldset>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.DESCRIPTION.BUILDING_NUMBER' | translate }}:</mat-label>
+        <input
+          matInput
+          required
+          formControlName="building"
+          [placeholder]="'COMMON.FOR_EXAMPLE' | translate: { value: '50' }"
+        />
+        <mat-error *ngIf="form.controls.building.errors?.pattern">
+          {{ 'FORMS.ERROR_MESSAGES.DOT_NOT_ALLOWED' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </fieldset>
+
+    <fieldset optionalField>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.DESCRIPTION.LINE_NUMBER' | translate }}:</mat-label>
+        <input
+          matInput
+          formControlName="line"
+          [placeholder]="'COMMON.FOR_EXAMPLE' | translate: { value: '34' }"
+        />
+        <mat-error *ngIf="form.controls.line.errors?.pattern">
+          {{ 'FORMS.ERROR_MESSAGES.DOT_NOT_ALLOWED' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </fieldset>
+
+    <fieldset optionalField>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.DESCRIPTION.TACT_PILLAR_POSITION' | translate }}:</mat-label>
+        <input
+          matInput
+          formControlName="position"
+          [placeholder]="'COMMON.FOR_EXAMPLE' | translate: { value: '238' }"
+        />
+        <mat-error *ngIf="form.controls.position.errors?.pattern">
+          {{ 'FORMS.ERROR_MESSAGES.DOT_NOT_ALLOWED' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </fieldset>
+  </section>
+
+  <section formGroupName="inspectionFeatureAvailable">
+    <fieldset>
+      <h5 class="mb-16">{{ 'FORMS.DESCRIPTION.INSPECTION_FEATURE_AVAILABLE' | translate }}*</h5>
+
+      <mat-radio-group aria-label="Select an option" formControlName="value">
+        <mat-radio-button [value]="true">
+          {{ 'LABEL.YES' | translate }}
+        </mat-radio-button>
+        <mat-radio-button class="ml-80" [value]="false">
+          {{ 'LABEL.NO' | translate }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </fieldset>
+
+    <fieldset class="mt-24" *ngIf="inspectionFeatureAvailable.value === true">
+      <div class="mb-16">{{ 'FORMS.DESCRIPTION.PART_AVAILABLE_FROM' | translate }}:*</div>
+
+      <mat-radio-group aria-label="Select an option" formControlName="productionOrPreSeries">
+        <mat-radio-button
+          [value]="option.value"
+          [class.ml-80]="!isFirst"
+          *ngFor="let option of partAvailableOptions; let isFirst = first"
+        >
+          {{ option.label | translate }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </fieldset>
+
+    <fieldset class="mt-24" *ngIf="inspectionFeatureAvailable.value === false">
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label
+          >{{ 'FORMS.DESCRIPTION.PART_AVAILABLE_FROM' | translate }}<sup>*</sup>:</mat-label
+        >
+        <input
+          matInput
+          required
+          readonly
+          formControlName="partAvailableFrom"
+          [matDatepicker]="picker"
+          [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_CHOOSE' | translate"
+          (click)="picker.open()"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </fieldset>
+  </section>
+
+  <section optionalField>
+    <h5 class="mb-16">
+      {{ 'FORMS.DESCRIPTION.BENEFITS_LABEL' | translate }} ({{
+        'FORMS.DESCRIPTION.MULTIPLE_CHOICE_POSSIBLE' | translate
+      }})
+    </h5>
+    <app-benefits formControlName="benefits"></app-benefits>
+  </section>
+
+  <section>
+    <fieldset>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.DESCRIPTION.BI_RATING' | translate }}:</mat-label>
+        <mat-select
+          required
+          [placeholder]="'FORMS.DESCRIPTION.SELECT_BI_RATING' | translate"
+          formControlName="biRating"
+        >
+          <mat-option *ngFor="let rating of [1, 2, 3, 4, 5, 6, 7]" [value]="rating">
+            {{ rating }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </fieldset>
+
+    <fieldset optionalField>
+      <mat-icon
+        [matTooltip]="'FORMS.DESCRIPTION.REASON_OF_URGENCY_TOOLTIP' | translate"
+        matTooltipPosition="left"
+        class="hint-icon"
+        >help</mat-icon
+      >
+
+      <div class="d-flex">
+        <mat-checkbox
+          class="mr-8"
+          color="primary"
+          [checked]="reasonOfUrgency.enabled"
+          [disabled]="!!form.disabled"
+          (change)="toggleControlAvailability($event)"
+        ></mat-checkbox>
+
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label> {{ 'FORMS.DESCRIPTION.REASON_OF_URGENCY' | translate }}: </mat-label>
+          <input
+            matInput
+            formControlName="reasonOfUrgency"
+            [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+          />
+        </mat-form-field>
+      </div>
+    </fieldset>
+  </section>
+</form>

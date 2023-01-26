@@ -1,0 +1,7 @@
+<div [ngStyle]="style">
+  <ng-content select="[header]"></ng-content>
+  <div mat-dialog-content>
+    <ng-content select="[body]"></ng-content>
+  </div>
+  <ng-content select="[actions]"></ng-content>
+</div>

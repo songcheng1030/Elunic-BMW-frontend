@@ -1,0 +1,312 @@
+<div class="table-wrapper">
+  <ng-container *ngIf="formStep">
+    <div class="d-flex align-items-center mb-16">
+      <span>
+        {{ 'FORMS.TITLES.DESCRIPTION' | translate }}
+      </span>
+      <a
+        class="ml-auto font-bold text-decoration-none"
+        [routerLink]="['/use-cases', 'edit', useCase.id, getStepUrl('description')]"
+        [queryParams]="{ 'tab-index': 0 }"
+      >
+        {{ 'USE_CASE.VIEW_FORM' | translate }}
+      </a>
+    </div>
+
+    <mat-card class="card-info">
+      <mat-list>
+        <div fxLayout="row" class="list-items">
+          <div class="title" fxFlex="40">
+            {{ 'FORMS.DESCRIPTION.INSPECTION_DESCRIPTION' | translate }}
+          </div>
+          <div fxFlex="60">{{ formStep.description }}</div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div class="title" fxFlex="40">{{ 'FORMS.DESCRIPTION.BUILDING_NUMBER' | translate }}</div>
+          <div fxFlex="60">{{ useCase.building }}</div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div class="title" fxFlex="40">{{ 'FORMS.DESCRIPTION.LINE_NUMBER' | translate }}</div>
+          <div fxFlex="60">{{ useCase.line }}</div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div class="title" fxFlex="40">
+            {{ 'FORMS.DESCRIPTION.TACT_PILLAR_POSITION' | translate }}
+          </div>
+          <div fxFlex="60">{{ useCase.position }}</div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div class="title" fxFlex="40">
+            {{ 'FORMS.DESCRIPTION.COSTS_FOR_USE_CASE' | translate }}
+          </div>
+          <div fxFlex="60">
+            {{ (formStep.costsCoveredByDepartment ? 'LABEL.YES' : 'LABEL.NO') | translate }}
+          </div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div class="title" fxFlex="40">
+            {{ 'FORMS.DESCRIPTION.INSPECTION_FEATURE_AVAILABLE' | translate }}
+          </div>
+          <div fxFlex="60" *ngIf="formStep.inspectionFeatureAvailable?.value; else unavailable">
+            {{ 'LABEL.YES' | translate }}:
+            {{
+              (formStep.inspectionFeatureAvailable?.productionOrPreSeries === 'in_production'
+                ? 'FORMS.DESCRIPTION.ALREADY_IN_PRODUCTION'
+                : 'FORMS.DESCRIPTION.IN_RUNNING_PRE_SERIES'
+              ) | translate
+            }}
+          </div>
+          <ng-template #unavailable>
+            {{ 'LABEL.NO' | translate }}: {{ 'FORMS.DESCRIPTION.PART_AVAILABLE_FROM' | translate }}
+            {{ formStep.inspectionFeatureAvailable?.partAvailableFrom | shortDate }}
+          </ng-template>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div class="object-view">
+            <div class="title">{{ 'FORMS.DESCRIPTION.BENEFITS_LABEL' | translate }}</div>
+            <div class="content" *ngFor="let value of getBenefitValues(formStep?.benefits)">
+              <div>{{ getBenefitField(value.key).label | translate }}</div>
+              <div class="item">
+                <div *ngFor="let item of getBenefitField(value.key).subfields">
+                  <div>{{ item.label | translate }}: {{ value.value[item.name] }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div class="title" fxFlex="40">{{ 'FORMS.DESCRIPTION.BI_RATING' | translate }}</div>
+          <div fxFlex="60">{{ formStep.biRating }}</div>
+        </div>
+        <div *ngIf="formStep.reasonOfUrgency" fxLayout="row" class="list-items">
+          <div class="title" fxFlex="40">
+            {{ 'FORMS.DESCRIPTION.REASON_OF_URGENCY' | translate }}
+          </div>
+          <div fxFlex="60">{{ formStep.reasonOfUrgency }}</div>
+        </div>
+      </mat-list>
+    </mat-card>
+  </ng-container>
+
+  <ng-container *ngIf="formStep">
+    <div class="d-flex align-items-center mb-16">
+      <span>
+        {{ 'FORMS.TITLES.PROJECT_PLANNING' | translate }}
+      </span>
+      <a
+        class="ml-auto font-bold text-decoration-none"
+        [routerLink]="['/use-cases', 'edit', useCase.id, getStepUrl('project_planning')]"
+        [queryParams]="{ 'tab-index': 1 }"
+      >
+        {{ 'USE_CASE.VIEW_FORM' | translate }}
+      </a>
+    </div>
+
+    <mat-card class="card-info">
+      <mat-list>
+        <div fxLayout="row" class="list-items">
+          <div fxFlex="40" class="title">
+            {{ 'FORMS.PROJECT_PLANNING.COMPLETION_DATE' | translate }}
+          </div>
+          <div fxFlex="60">{{ formStep.completionDate | shortDate }}</div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div fxFlex="40" class="title">{{ 'FORMS.PROJECT_PLANNING.REQUESTOR' | translate }}</div>
+          <div fxFlex="60" class="mt-20 mb-20">
+            <div>
+              {{ 'FORMS.PROJECT_PLANNING.NAME' | translate }}: {{ formStep.requestor?.name }}
+            </div>
+            <div>
+              {{ 'FORMS.PROJECT_PLANNING.DEPARTMENT' | translate }}:
+              {{ formStep.requestor?.department }}
+            </div>
+            <div>
+              {{ 'FORMS.PROJECT_PLANNING.FUNCTION' | translate }}:
+              {{
+                requestorFunction?.value === 'other'
+                  ? requestorFunction?.label
+                  : (requestorFunction?.label | translate)
+              }}
+            </div>
+          </div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div fxFlex="40" class="title">
+            {{ 'FORMS.PROJECT_PLANNING.PROCESS_OR_PLANT_PLANNER' | translate }}
+          </div>
+          <div fxFlex="60" class="mt-20 mb-20">
+            <div>{{ 'FORMS.PROJECT_PLANNING.NAME' | translate }}: {{ formStep.planner?.name }}</div>
+            <div>
+              {{ 'FORMS.PROJECT_PLANNING.DEPARTMENT' | translate }}:
+              {{ formStep.planner?.department }}
+            </div>
+            <div>
+              {{ 'FORMS.PROJECT_PLANNING.INFORMED' | translate }}:
+              {{ (formStep.planner?.informed ? 'LABEL.YES' : 'LABEL.NO') | translate }}
+            </div>
+          </div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div fxFlex="40" class="title">{{ 'FORMS.PROJECT_PLANNING.PSP' | translate }}</div>
+          <div fxFlex="60" class="mt-20 mb-20">
+            <div>{{ 'FORMS.PROJECT_PLANNING.NAME' | translate }}: {{ formStep.psp?.name }}</div>
+            <div>
+              {{ 'FORMS.PROJECT_PLANNING.DEPARTMENT' | translate }}:
+              {{ formStep.psp?.department }}
+            </div>
+            <div>
+              {{ 'FORMS.PROJECT_PLANNING.INFORMED' | translate }}:
+              {{ (formStep.psp?.informed ? 'LABEL.YES' : 'LABEL.NO') | translate }}
+            </div>
+          </div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div fxFlex="40" class="title">{{ 'FORMS.PROJECT_PLANNING.QE' | translate }}</div>
+          <div fxFlex="60" class="mt-20 mb-20">
+            <div>{{ 'FORMS.PROJECT_PLANNING.NAME' | translate }}: {{ formStep.qe?.name }}</div>
+            <div>
+              {{ 'FORMS.PROJECT_PLANNING.DEPARTMENT' | translate }}:
+              {{ formStep.qe?.department }}
+            </div>
+            <div>
+              {{ 'FORMS.PROJECT_PLANNING.INFORMED' | translate }}:
+              {{ (formStep.qe?.informed ? 'LABEL.YES' : 'LABEL.NO') | translate }}
+            </div>
+          </div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div fxFlex="40" class="title">{{ 'FORMS.PROJECT_PLANNING.SECTION' | translate }}</div>
+          <div fxFlex="60" class="mt-20 mb-20">
+            <div>{{ 'FORMS.PROJECT_PLANNING.NAME' | translate }}: {{ formStep.section?.name }}</div>
+            <div>
+              {{ 'FORMS.PROJECT_PLANNING.DEPARTMENT' | translate }}:
+              {{ formStep.section?.department }}
+            </div>
+            <div>
+              {{ 'FORMS.PROJECT_PLANNING.INFORMED' | translate }}:
+              {{ (formStep.section?.informed ? 'LABEL.YES' : 'LABEL.NO') | translate }}
+            </div>
+          </div>
+        </div>
+      </mat-list>
+    </mat-card>
+  </ng-container>
+
+  <ng-container *ngIf="formStep">
+    <div class="d-flex align-items-center mb-16">
+      <span>
+        {{ 'FORMS.TITLES.FEATURE_DEFINITION' | translate }}
+      </span>
+      <a
+        class="ml-auto font-bold text-decoration-none"
+        [routerLink]="['/use-cases', 'edit', useCase.id, getStepUrl('feature_definition')]"
+        [queryParams]="{ 'tab-index': 2 }"
+      >
+        {{ 'USE_CASE.VIEW_FORM' | translate }}
+      </a>
+    </div>
+
+    <mat-card class="card-info">
+      <mat-list>
+        <div fxLayout="row" class="list-items">
+          <div fxFlex="40" class="title">
+            {{ 'FORMS.FEATURE_DEFINITION.CAMERA_INTEGRATION' | translate }}
+          </div>
+          <div fxFlex="60">
+            {{ getBoolean(formStep.cameraIntegration) || 'LABEL.UNKNOWN' | translate }}
+          </div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div fxFlex="40" class="title">
+            {{ 'FORMS.FEATURE_DEFINITION.TYPE_OF_INSPECTION' | translate }}
+          </div>
+          <div fxFlex="60">
+            <div *ngFor="let type of formStep?.typeOfInspection?.name">
+              {{ getTypeLabel(type) | translate }}
+            </div>
+          </div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div fxFlex="40" class="title">
+            {{ 'FORMS.FEATURE_DEFINITION.FEATURE_SIZE' | translate }}
+          </div>
+          <div fxFlex="60">{{ formStep.featureSize }}</div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div fxFlex="40" class="title">
+            {{ 'FORMS.FEATURE_DEFINITION.POSITION_AND_ORIENTATION_ALWAYS_THE_SAME' | translate }}
+          </div>
+          <div fxFlex="60">
+            {{ (formStep.samePositionAndOrientation ? 'LABEL.YES' : 'LABEL.NO') | translate }}
+          </div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div fxFlex="40" class="title">
+            {{ 'FORMS.FEATURE_DEFINITION.CAMERA_DISTANCE_CM' | translate }}
+          </div>
+          <div fxFlex="60">{{ formStep.cameraDistance }}</div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div fxFlex="40" class="title">
+            {{ 'FORMS.FEATURE_DEFINITION.FEATURE_COLOR_CHANGING' | translate }}
+          </div>
+          <div fxFlex="60">
+            {{ (formStep.featureColor ? 'LABEL.YES' : 'LABEL.NO') | translate }}
+          </div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div fxFlex="40" class="title">
+            {{ 'FORMS.FEATURE_DEFINITION.FEATURE_HALTED_OR_MOVING' | translate }}
+          </div>
+          <div fxFlex="60">
+            {{
+              formStep.haltedOrMoving
+                ? ('FORMS.FEATURE_DEFINITION.' + formStep.haltedOrMoving | uppercase | translate)
+                : ''
+            }}
+          </div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div fxFlex="40" class="title">
+            {{ 'FORMS.FEATURE_DEFINITION.POSITION_IN_VEHICLE' | translate }}
+          </div>
+          <div fxFlex="60">
+            {{ getPositionInVehicleLabel(formStep?.positionInVehicle?.name) | translate }}
+          </div>
+        </div>
+        <div fxLayout="row" class="list-items">
+          <div fxFlex="40" class="title">
+            {{ 'FORMS.FEATURE_DEFINITION.NUMBER_OF_VARIANTS' | translate }}
+          </div>
+          <div fxFlex="60">{{ formStep?.numberOfVariants }}</div>
+        </div>
+      </mat-list>
+    </mat-card>
+  </ng-container>
+
+  <ng-container *ngIf="formStep">
+    <div class="d-flex align-items-center mb-16">
+      <span>
+        {{ 'FORMS.TITLES.EXAMPLE_IMAGES' | translate }}
+      </span>
+      <a
+        class="ml-auto font-bold text-decoration-none"
+        [routerLink]="['/use-cases', 'edit', useCase.id, getStepUrl('example_images')]"
+        [queryParams]="{ 'tab-index': 3 }"
+      >
+        {{ 'USE_CASE.VIEW_FORM' | translate }}
+      </a>
+    </div>
+
+    <mat-card class="card-info">
+      <mat-list>
+        <mat-list-item>
+          <app-attachments-table
+            [attachments]="exampleAttachments"
+            class="full-width"
+          ></app-attachments-table>
+        </mat-list-item>
+      </mat-list>
+    </mat-card>
+  </ng-container>
+</div>

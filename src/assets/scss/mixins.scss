@@ -1,0 +1,282 @@
+@import './variables.scss';
+
+// This mixin is a MAJOR KLUDGE. Here's what you need to make it work.
+// First, make sure you have a `mat-form-field` with the default appearance
+// and a `floatLabel` attribute with a value of `'always'`. Then, in your
+// component's associated style file, add `@include mat-dark;`.
+@mixin mat-dark {
+  :host ::ng-deep {
+    // The default appearance includes an underline.
+    .mat-form-field-underline {
+      display: none;
+    }
+
+    // This padding shifts the autocomplete menu down a couple of pixels. This
+    // looks good when the field has an underline, but we need to remove it
+    // here.
+    .mat-form-field-infix {
+      padding-bottom: 0;
+    }
+
+    // Here's where we make the most visible changes to the input fields: Most
+    // of these modifications come straight from the designs.
+    .mat-input-element,
+    .mat-select {
+      height: 45px;
+      padding: 0 14px;
+      box-sizing: border-box;
+      border-radius: 4px;
+      font-size: 13px;
+      color: $gray13;
+      background-color: $gray1 !important;
+      caret-color: $gray13;
+    }
+
+    .mat-input-element::placeholder,
+    .mat-select-placeholder,
+    .mat-select-arrow {
+      color: rgba($gray13, 0.4) !important;
+    }
+
+    .mat-select-arrow {
+      width: 11px;
+      height: 7px;
+      border: 0;
+      background-image: url('../icons/dropdown.svg');
+    }
+
+    .mat-select-value {
+      color: $gray13;
+    }
+
+    // When we resize the field, the "trigger" (the part that responds to
+    // clicks, which usually contains the current value along with an arrow)
+    // sits too high. Here we bring it down a hair.
+    .mat-select-trigger {
+      top: 16px;
+    }
+
+    .mat-select-disabled {
+      .mat-select-value,
+      .mat-select-arrow {
+        opacity: 0.5;
+      }
+    }
+
+    // We adjust the label color and position according to the designs.
+    .mat-form-field-label {
+      font-size: 11px;
+      font-weight: 400;
+      color: $gray13;
+      transform: translateY(-10px) !important;
+      opacity: 0.4;
+      transition: opacity 0.2s ease;
+    }
+
+    .mat-form-field.mat-focused {
+      .mat-form-field-label {
+        color: $gray13;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+      }
+    }
+
+    .mat-form-field-suffix {
+      position: absolute;
+      right: 10px;
+      top: 25px;
+
+      .mat-icon {
+        width: 11px;
+        height: 11px;
+      }
+    }
+
+    // We have to modify quite it bit to mold the chiplist into shape. However,
+    // it's not as much as it might seem: all we really need to to do is give
+    // the wrapper similar styles to the inputs above so that it blends
+    // smoothly with its associated input; we also tweak the chips a bit so
+    // they match the designs.
+    mat-chip-list {
+      outline: none;
+    }
+
+    .mat-chip-list-wrapper {
+      background-color: $gray1;
+      box-sizing: border-box;
+      padding: 0 6px;
+      margin: 0;
+      border-radius: 4px;
+
+      // Keep chips in single row
+      overflow-x: auto;
+      flex-wrap: unset;
+
+      .mat-chip-input {
+        margin: 0;
+        padding: 0 8px;
+      }
+
+      .chip-label {
+        width: 71px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .mat-standard-chip {
+        min-height: unset;
+        height: 26px;
+        min-width: 108px !important;
+        background-color: $gray4 !important;
+        padding-top: 8px;
+        font-size: 11px;
+        font-weight: 500;
+        color: $gray13;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      mat-icon.mat-chip-remove {
+        color: $gray13;
+        opacity: 1;
+        width: 9px;
+      }
+    }
+
+    // Extra height creates gap between input and options overlay
+    .mat-form-field-type-mat-chip-list .mat-form-field-infix {
+      height: 45px;
+    }
+  }
+
+  // When a field is automatically filled in by the browser (at least on
+  // Chrome), its background is changed to an offwhite color, which looks
+  // dreadful against a dark backdrop. Here we simply override this behavior.
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    box-shadow: 0 0 0 30px $gray1 inset !important;
+    -webkit-box-shadow: 0 0 0 30px $gray1 inset !important;
+
+    color: $gray13;
+    -webkit-text-fill-color: $gray13;
+  }
+}
+
+@mixin mat-light {
+  :host ::ng-deep {
+    // Remove underline
+    .mat-form-field-underline {
+      display: none;
+    }
+
+    // The form field's main container.
+    .mat-form-field-infix {
+      height: 55px;
+      padding: 0 14px;
+      box-sizing: border-box;
+      border-radius: 3px;
+      background-color: $gray13;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+      border: solid 1px $gray10;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    // Keep the dropdown from being pushed low
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+
+    // The actual <input /> element
+    .mat-input-element {
+      height: 18px;
+      margin-top: 26px !important;
+      font-size: 14px;
+    }
+
+    // The label
+    .mat-form-field-label {
+      font-size: 12px;
+      transform: translate(14px, 6px) !important;
+      color: #666 !important;
+    }
+
+    // Error message
+    .mat-form-field-subscript-wrapper {
+      top: 50px;
+    }
+
+    .mat-select-value-text {
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    // Placeholders
+    .mat-input-element::placeholder,
+    .mat-select-placeholder,
+    .mat-select-arrow {
+      color: $gray2 !important;
+      opacity: 0.5;
+    }
+
+    .mat-select-arrow {
+      width: 11px;
+      height: 7px;
+      border: 0;
+      background-image: url('../icons/dropdown_dark.svg');
+      opacity: 1;
+    }
+
+    .mat-select-trigger {
+      margin-top: 26px;
+    }
+
+    .mat-chip-list-wrapper {
+      box-sizing: border-box;
+      margin-top: 28px !important;
+      padding-left: 0px !important;
+      margin-left: -4px !important;
+      margin: 0;
+      border-radius: 4px;
+
+      // Keep chips in single row
+      overflow-x: auto;
+      flex-wrap: unset;
+
+      .mat-chip-input {
+        margin: 0 !important;
+        margin-left: 4px !important;
+      }
+
+      .chip-label {
+        min-width: 71px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .mat-standard-chip {
+        min-height: unset;
+        height: 25px;
+        border-radius: 13px;
+        padding-top: 8px;
+        font-size: 11px;
+        font-weight: 500;
+        color: $gray13;
+        background-color: #6a7383 !important;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+      }
+
+      .mat-chip-remove {
+        color: $gray13 !important;
+        opacity: 1 !important;
+        font-size: 1rem !important;
+        width: 9px !important;
+      }
+    }
+  }
+}

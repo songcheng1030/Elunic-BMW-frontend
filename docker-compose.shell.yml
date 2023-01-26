@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: _fixtures/dockershell/
+      dockerfile: Dockerfile
+      args:
+        NODE_VERSION: 14
+        NG_VERSION: 13
+        NPM_VERSION: 6
+    hostname: aiqx-use-cases
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - ~/.npmrc:/root/.npmrc
+      - ~/.npmrc:/home/node/.npmrc
+      - ~/.npm/:/home/node/.npm/
+      - '${SSH_AUTH_SOCK:-/tmp/_ssh_auth_sock_stub}:${SSH_AUTH_SOCK:-/tmp/_ssh_auth_sock_stub}'
+    ports:
+      - 4200:4200
+    environment:
+      SSH_AUTH_SOCK: '${SSH_AUTH_SOCK:-/tmp/_ssh_auth_sock_stub}'

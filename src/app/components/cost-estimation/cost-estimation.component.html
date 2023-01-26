@@ -1,0 +1,55 @@
+<div *ngIf="offer && init" fxLayout="column" fxLayoutGap="30px" style="margin-bottom: 30px">
+  <div fxLayout="row" fxLayoutGap="100px">
+    <div fxFlex="50" fxLayoutAlign="space-between center">
+      <h5>{{ 'FORMS.USE_CASE_OFFER.ONE_TIME_COSTS' | translate }}</h5>
+      <h5>
+        {{ calc.getOneTimeCost(offer) | mask: 'separator':('COMMON.THOUSAND_SEPARATOR' | translate)
+        }}{{ calc.currencySymbol }}
+      </h5>
+    </div>
+
+    <div fxFlex="50" fxLayoutAlign="space-between center">
+      <h5>{{ 'FORMS.USE_CASE_OFFER.YEARLY_COSTS' | translate }}</h5>
+      <h5>
+        {{ calc.getYearlyCost(offer) | mask: 'separator':('COMMON.THOUSAND_SEPARATOR' | translate)
+        }}{{ calc.currencySymbol }}
+      </h5>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutGap="100px">
+    <div fxFlex="50" fxLayoutAlign="space-between center">
+      <div>{{ 'FORMS.USE_CASE_OFFER.HARDWARE' | translate }}</div>
+      <div>
+        {{
+          calc.getHardwareCostEstimation(offer)
+            | mask: 'separator':('COMMON.THOUSAND_SEPARATOR' | translate)
+        }}{{ calc.currencySymbol }}
+      </div>
+    </div>
+    <div fxFlex="50" fxLayoutAlign="space-between center"></div>
+  </div>
+  <div fxLayout="row" fxLayoutGap="100px">
+    <div fxFlex="50" fxLayoutAlign="space-between center">
+      <div>{{ 'FORMS.USE_CASE_OFFER.INSTALLATION' | translate }}</div>
+      <div>
+        {{
+          calc.getInstallationCost(offer)
+            | mask: 'separator':('COMMON.THOUSAND_SEPARATOR' | translate)
+        }}{{ calc.currencySymbol }}
+      </div>
+    </div>
+    <div fxFlex="50" fxLayoutAlign="space-between center"></div>
+  </div>
+  <div fxLayout="row" fxLayoutGap="100px">
+    <div fxFlex="50" fxLayoutAlign="space-between center">
+      <div>{{ 'FORMS.USE_CASE_OFFER.IMPLEMENTATION' | translate }}</div>
+      <div>
+        {{
+          calc.getImplementationCost(offer)
+            | mask: 'separator':('COMMON.THOUSAND_SEPARATOR' | translate)
+        }}{{ calc.currencySymbol }}
+      </div>
+    </div>
+    <div fxFlex="50" fxLayoutAlign="space-between center"></div>
+  </div>
+</div>

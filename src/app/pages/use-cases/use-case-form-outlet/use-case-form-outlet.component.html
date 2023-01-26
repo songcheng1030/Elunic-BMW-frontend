@@ -1,0 +1,120 @@
+<ng-container *ngIf="currentForm$ | async as currentForm">
+  <ng-container *ngIf="configurator.disabledSteps$ | async as disabledSteps">
+    <div *ngIf="segments$ | async as segments" class="page-container" [loader]="loading">
+      <app-form-stepper-sidebar
+        [steps]="steps$ | async"
+        [mainStepIndex]="stepperIndex$ | async"
+        (cancel)="router.navigate(segments[0].link)"
+        (delete)="deleteUseCase($event)"
+        (save)="saveProgress(currentForm)"
+        (submit)="submitUseCase(currentForm)"
+      ></app-form-stepper-sidebar>
+      <div class="content-container p-20">
+        <div class="d-flex align-items-center">
+          <app-breadcrumb class="mr-10" [segments]="segments"></app-breadcrumb>
+
+          <div class="mr-10 top-menu-item">{{ 'USE_CASE.MANDATORY_MARK' | translate }}</div>
+          <mat-checkbox
+            class="mr-10 top-menu-item"
+            color="primary"
+            (change)="configurator.showMandatoryOnly = !configurator.showMandatoryOnly"
+          >
+            {{ 'LABEL.SHOW_MANDATORY_ONLY' | translate }}
+          </mat-checkbox>
+          <button
+            *ngIf="currentForm !== 'live'"
+            (click)="saveProgress(currentForm)"
+            type="submit"
+            class="ph-40 mr-10 top-menu-item"
+            mat-button
+            color="primary"
+            [disabled]="saveDisabled$ | async"
+          >
+            {{ 'ACTION.SAVE_PROGRESS' | translate }}
+          </button>
+          <button
+            *ngIf="currentForm !== 'order' && currentForm !== 'live'"
+            type="submit"
+            class="ph-40 top-menu-btn"
+            mat-flat-button
+            color="primary"
+            (click)="submitUseCase(currentForm)"
+            [disabled]="submitDisabled$ | async"
+          >
+            {{ getSubmitButtonName(currentForm) | translate }}
+          </button>
+        </div>
+        <div class="content-main">
+          <router-outlet></router-outlet>
+        </div>
+        <div
+          class="content-footer"
+          [style]="
+            currentForm === 'order' ? 'justify-content: center;' : 'justify-content: flex-end;'
+          "
+        >
+          <ng-container *ngTemplateOutlet="nextBtn"></ng-container>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #nextBtn>
+      <a
+        *ngIf="((tabIndex$ | async) || 0) < (subSteps$ | async)?.length - 1; else submitBtn"
+        class="ph-60"
+        mat-flat-button
+        color="primary"
+        type="button"
+        [routerLink]="[]"
+        [queryParams]="{ 'tab-index': ((tabIndex$ | async) || 0) + 1 }"
+      >
+        {{ 'ACTION.NEXT' | translate }}
+      </a>
+      <ng-template #submitBtn>
+        <ng-container *ngIf="currentForm !== 'live'">
+          <ng-container *ngIf="currentForm !== 'order'; else offerChoice">
+            <button
+              type="submit"
+              class="ph-40"
+              mat-flat-button
+              color="primary"
+              (click)="submitUseCase(currentForm)"
+              [disabled]="submitDisabled$ | async"
+            >
+              {{ getSubmitButtonName(currentForm) | translate }}
+            </button>
+          </ng-container>
+        </ng-container>
+        <ng-template #offerChoice>
+          <button
+            type="submit"
+            class="ph-40 mr-10"
+            mat-flat-button
+            color="warn"
+            (click)="acceptOffer(false)"
+            [disabled]="saveDisabled$ | async"
+          >
+            {{ 'ACTION.DECLINE_OFFER' | translate }}
+          </button>
+
+          <span
+            [matTooltipDisabled]="(offerDisabled$ | async) === false"
+            [matTooltip]="'FORMS.USE_CASE_ORDER.ACCEPT_NEW_DATE_TOOLTIP' | translate"
+            matTooltipPosition="above"
+          >
+            <button
+              type="submit"
+              class="ph-40 mr-10"
+              mat-flat-button
+              color="success"
+              (click)="acceptOffer(true)"
+              [disabled]="offerDisabled$ | async"
+            >
+              {{ 'ACTION.ACCEPT_OFFER' | translate }}
+            </button>
+          </span>
+        </ng-template>
+      </ng-template>
+    </ng-template>
+  </ng-container>
+</ng-container>

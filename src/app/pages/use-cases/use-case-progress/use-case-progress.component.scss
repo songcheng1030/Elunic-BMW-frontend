@@ -1,0 +1,142 @@
+@import 'variables';
+@import 'tools';
+
+:host ::ng-deep {
+  flex-grow: 1;
+  background-color: $gray12;
+
+  .mat-card {
+    display: flex;
+    padding: 24px 37px 24px 24px;
+    margin-bottom: 24px;
+    justify-content: space-between;
+    box-shadow: 0 1px 4px 0 rgba(#000, 0.1);
+
+    .label {
+      color: $gray5;
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+  }
+
+  .card-info {
+    padding: 0;
+    margin-bottom: 30px;
+
+    &:last-of-type {
+      margin-bottom: 20px;
+    }
+
+    .mat-list-base {
+      padding: 0;
+      width: 100%;
+
+      .mat-list-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: unset;
+        min-height: 48px;
+
+        &:not(:last-of-type) {
+          border-bottom: 1px solid $gray6;
+        }
+      }
+    }
+  }
+
+  .mat-expansion-panel {
+    box-shadow: 0 1px 4px 0 rgba(#000, 0.1);
+
+    &.mat-expansion-panel-spacing {
+      margin: 0;
+    }
+
+    & + .mat-expansion-panel {
+      margin-top: 24px;
+    }
+
+    .mat-expansion-panel-header.cdk-program-focused:not([aria-disabled='true']),
+    .mat-expansion-panel-header.cdk-keyboard-focused:not([aria-disabled='true']),
+    &:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled='true']) {
+      background-color: $gray12;
+    }
+
+    .mat-expansion-panel-header {
+      padding-right: 37px;
+      transition: background-color 0.15s ease-out;
+
+      .mat-expansion-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 14px;
+        height: 14px;
+
+        &::after {
+          color: inherit;
+          padding: 3.5px;
+          margin-bottom: 4px;
+          border-width: 0 3px 3px 0;
+        }
+      }
+    }
+  }
+}
+
+.header-card > div {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.steps-card {
+  overflow-x: auto;
+  @include custom-scrollbar;
+}
+
+.use-case-name {
+  max-height: 48px;
+  line-height: 24px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+}
+
+.step-card {
+  font-size: 12px;
+  color: $gray5;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.step-card-value {
+  font-size: 12px;
+}
+
+.step-state {
+  font-size: 12px;
+}
+
+.red-icon {
+  color: $red1;
+}
+
+.number-icon {
+  background: $gray5;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  line-height: 1;
+  color: $gray13;
+  font-size: 12px;
+  text-align: center;
+  padding: 4px;
+
+  &.primary {
+    background: $blue1;
+  }
+}

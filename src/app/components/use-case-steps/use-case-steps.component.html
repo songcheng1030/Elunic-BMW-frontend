@@ -1,0 +1,9 @@
+<div class="steps">
+  <app-use-case-step
+    *ngFor="let step of _steps; let index = index; let last = last; trackBy: trackByName"
+    [noTrail]="last"
+    [step]="step"
+    [error]="step.error"
+  >
+  </app-use-case-step>
+</div>

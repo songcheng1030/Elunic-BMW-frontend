@@ -1,0 +1,18 @@
+{
+  "root": true,
+  "extends": ["./.eslintrc.json"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "extends": ["@elunic/eslint-config-ecs/fix"],
+      "rules": {
+        "@typescript-eslint/array-type": ["error", { "default": "array" }],
+        "@typescript-eslint/no-unused-vars": ["error", { "ignoreRestSiblings": true }],
+        "no-unused-vars": "off",
+        "no-empty-function": ["warn", {}],
+        "@typescript-eslint/no-empty-function": "warn",
+        "@angular-eslint/no-empty-lifecycle-method": "warn"
+      }
+    }
+  ]
+}

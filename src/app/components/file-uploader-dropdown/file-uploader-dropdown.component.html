@@ -1,0 +1,26 @@
+<div class="file-uploader-dropdown d-flex flex-column justify-content-center align-items-center">
+  <ngx-file-drop
+    [accept]="config.accept"
+    [disabled]="isDisabled"
+    [multiple]="type === 'images'"
+    dropZoneLabel="Drop files here"
+    (onFileDrop)="onDroppedFiles($event)"
+  >
+    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+      <div class="d-flex flex-column justify-content-center align-items-center">
+        <span>{{ config.label | translate }}</span>
+        <span>{{ 'LABEL.OR' | translate }}</span>
+        <button
+          [disabled]="isDisabled"
+          mat-flat-button
+          class="mt-24"
+          color="primary"
+          type="button"
+          (click)="openFileSelector()"
+        >
+          <span>{{ 'LABEL.CLICK_HERE' | translate }}</span>
+        </button>
+      </div>
+    </ng-template>
+  </ngx-file-drop>
+</div>

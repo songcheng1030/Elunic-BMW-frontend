@@ -1,0 +1,104 @@
+<form [id]="formId" [formGroup]="form">
+  <section formGroupName="orderData">
+    <fieldset>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.VARIANTS.ORDER_DATA' | translate }}:</mat-label>
+        <mat-select
+          required
+          [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_CHOOSE' | translate"
+          formControlName="value"
+        >
+          <mat-option *ngFor="let option of orderDataOptions" [value]="option.value">
+            {{ option.label | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </fieldset>
+
+    <fieldset *ngIf="orderData.value.value === 'other'">
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.VARIANTS.OTHER' | translate }}:</mat-label>
+        <input
+          matInput
+          required
+          formControlName="description"
+          [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+        />
+      </mat-form-field>
+    </fieldset>
+  </section>
+
+  <section formGroupName="trigger">
+    <fieldset>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.VARIANTS.TRIGGER' | translate }}:</mat-label>
+        <mat-select
+          required
+          [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_CHOOSE' | translate"
+          formControlName="value"
+        >
+          <mat-option *ngFor="let option of triggerOptions" [value]="option.value">
+            {{ option.label | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </fieldset>
+
+    <fieldset *ngIf="trigger.value.value === 'other'">
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.VARIANTS.OTHER' | translate }}:</mat-label>
+        <input
+          matInput
+          required
+          formControlName="description"
+          [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+        />
+      </mat-form-field>
+    </fieldset>
+  </section>
+
+  <section formGroupName="validationResult">
+    <fieldset>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.VARIANTS.VALIDATION_RESULT' | translate }}:</mat-label>
+        <mat-select
+          required
+          [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_CHOOSE' | translate"
+          formControlName="value"
+        >
+          <mat-option *ngFor="let option of validationResultOptions" [value]="option.value">
+            {{ option.label | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </fieldset>
+
+    <fieldset *ngIf="validationResult.value.value === 'other'">
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.VARIANTS.OTHER' | translate }}:</mat-label>
+        <input
+          matInput
+          required
+          formControlName="description"
+          [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+        />
+      </mat-form-field>
+    </fieldset>
+  </section>
+  <section>
+    <fieldset>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>{{ 'FORMS.VARIANTS.MAX_RESPONSE_TIME' | translate }}</mat-label>
+        <input
+          matInput
+          required
+          formControlName="maxResponseTime"
+          step="1"
+          min="1"
+          type="number"
+          [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_SPECIFY' | translate"
+        />
+      </mat-form-field>
+    </fieldset>
+  </section>
+</form>

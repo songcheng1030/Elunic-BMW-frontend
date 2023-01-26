@@ -1,0 +1,14 @@
+<app-form-container>
+  <ng-container header>
+    <h1 class="mat-h1 mt-20">
+      {{ 'FORMS.TITLES.IMPLEMENTATION' | translate }}
+    </h1>
+  </ng-container>
+  <ng-container body>
+    <form [id]="formId" [formGroup]="form">
+      <mat-checkbox color="primary" formControlName="completed" required>
+        {{ 'FORMS.IMPLEMENTATION.COMPLETED' | translate }}*
+      </mat-checkbox>
+    </form>
+  </ng-container>
+</app-form-container>

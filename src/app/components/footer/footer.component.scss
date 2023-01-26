@@ -1,0 +1,32 @@
+@import 'variables';
+
+footer {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  background-color: #f3f3f3;
+
+  ul {
+    list-style: none;
+    display: flex;
+    width: 100%;
+
+    li {
+      color: $gray1;
+
+      & + li {
+        margin-left: 30px;
+      }
+
+      a {
+        color: $gray1;
+        text-decoration: none;
+        transition: color 0.25s ease;
+
+        &:hover {
+          color: $gray5;
+        }
+      }
+    }
+  }
+}

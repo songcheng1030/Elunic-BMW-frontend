@@ -1,0 +1,131 @@
+<div class="stepper" *ngIf="configurator.meta as meta">
+  <div class="stepper-header">
+    <div class="d-flex align-items-center mb-10">
+      <h1
+        class="mat-h1 use-case-name"
+        matTooltipPosition="left"
+        matTooltipClass="use-case-name-tooltip"
+        [matTooltip]="useCaseName"
+      >
+        {{ useCaseName }}
+      </h1>
+
+      <div class="d-flex align-items-center ml-auto">
+        <mat-icon class="mi-16 mr-5 text-light-gray">place</mat-icon>
+        <span class="font-bold">{{ plantName$ | async }}</span>
+      </div>
+    </div>
+
+    <p class="text-light-gray mb-2">
+      {{ 'LABEL.CREATED_BY' | translate }}:
+      {{ (meta.createdBy | username) || authService.me?.givenName }}
+    </p>
+    <p class="text-light-gray">
+      {{ 'LABEL.LAST_CHANGED' | translate }}:
+      {{ meta.updatedAt | short }}
+    </p>
+
+    <div class="d-flex mt-24 mb-10">
+      <span>
+        {{ 'USE_CASE.STATUS_LABEL' | translate }}:
+        {{ getStepLabel(meta) | translate }}
+      </span>
+      <span class="ml-auto">{{ completedSteps }} / {{ steps.length }}</span>
+    </div>
+
+    <div class="progress-bar">
+      <mat-progress-bar
+        mode="determinate"
+        [value]="configurator.getOverallProgress()"
+      ></mat-progress-bar>
+      <div
+        *ngFor="let step of steps; let i = index"
+        class="separator"
+        [style.left]="getXPos(i)"
+      ></div>
+    </div>
+  </div>
+
+  <div class="stepper-body">
+    <mat-accordion>
+      <mat-expansion-panel
+        *ngFor="let step of steps; let i = index"
+        [disabled]="step.subSteps.length <= 1"
+        [expanded]="mainStepIndex === i"
+        [class.pointer]="step.subSteps.length <= 1"
+      >
+        <mat-expansion-panel-header
+          collapsedHeight="45px"
+          expandedHeight="45px"
+          [routerLink]="step.route"
+          [queryParams]="{ 'tab-index': 0 }"
+          queryParamsHandling="merge"
+          [ngStyle]="{ 'pointer-events': step.disabled || mainStepIndex === i ? 'none' : null }"
+          (click)="onMainStepSelect(i)"
+        >
+          <mat-panel-title>
+            {{ i + 1 }}. {{ step.title | translate }}
+            <mat-icon
+              *ngIf="configurator.isStepCompleted(step.form) || configurator.isUseCaseDone()"
+              class="progress"
+              >check_circle</mat-icon
+            >
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <mat-selection-list [multiple]="false" *ngIf="step.subSteps.length > 1">
+          <mat-list-option
+            *ngFor="let subStep of step.subSteps; let j = index"
+            [disabled]="subStep.disabled"
+            [selected]="(subStepIndex$ | async) === j"
+            (click)="onStepSelect(j)"
+          >
+            {{ subStep.title | translate }}
+            <mat-icon
+              *ngIf="
+                configurator.isStepCompleted(step.form) ||
+                configurator.isSubStepCompleted(subStep.form) ||
+                ((visitedSteps$ | async)?.has(subStep.form) &&
+                  (configurator.validSubForms$ | async)?.includes(subStep.form))
+              "
+              class="progress"
+            >
+              check_circle
+            </mat-icon>
+          </mat-list-option>
+        </mat-selection-list>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+  <div class="stepper-footer-wrapper">
+    <div class="stepper-footer">
+      <div class="link-buttons-group">
+        <a *ngIf="meta.id" class="link-button link-button-delete" (click)="delete.emit(meta.id)">
+          {{ 'ACTION.DELETE' | translate }}
+        </a>
+        <a class="link-button" (click)="cancel.emit()">{{ 'ACTION.CANCEL' | translate }}</a>
+        <a
+          [ngStyle]="{
+            'pointer-events': (saveDisabled$ | async) ? 'none' : null,
+            opacity: (saveDisabled$ | async) ? '0.4' : null
+          }"
+          class="link-button"
+          (click)="save.emit()"
+        >
+          {{ 'ACTION.SAVE_PROGRESS' | translate }}
+        </a>
+      </div>
+      <button
+        *ngIf="currentStep !== 'order' && currentStep !== 'live'"
+        [disabled]="submitDisabled$ | async"
+        class="mt-8"
+        mat-flat-button
+        color="primary"
+        (click)="submit.emit()"
+      >
+        {{ getSubmitButtonName(currentStep) | translate }}
+      </button>
+    </div>
+  </div>
+</div>

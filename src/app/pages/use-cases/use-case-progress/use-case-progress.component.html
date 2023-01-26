@@ -1,0 +1,305 @@
+<div class="container pv-30">
+  <div class="d-flex align-items-center mb-16">
+    <app-breadcrumb class="mr-auto" [segments]="segments"></app-breadcrumb>
+
+    <button *ngIf="canDelete" class="mr-8" mat-button color="warn" (click)="deleteUseCase()">
+      <mat-icon class="mi-16 mr-6">delete</mat-icon>
+      <span>{{ 'USE_CASE.DELETE_USE_CASE' | translate }}</span>
+    </button>
+
+    <ng-container *ngIf="currentForm$ | async as form">
+      <a
+        *ngIf="canEdit(form)"
+        mat-button
+        color="primary"
+        [routerLink]="['/use-cases', 'edit', useCase.id, form]"
+      >
+        <mat-icon class="mi-16 mr-6">edit</mat-icon>
+        <span>{{ 'USE_CASE.EDIT_USE_CASE' | translate }}</span>
+      </a>
+    </ng-container>
+  </div>
+
+  <mat-card class="header-card br-8">
+    <h1
+      class="mat-h1 mw-200 use-case-name"
+      matTooltipPosition="left"
+      matTooltipClass="use-case-name-tooltip"
+      [matTooltip]="useCase.name"
+    >
+      {{ useCase.name }}
+    </h1>
+
+    <div>
+      <p class="label">{{ 'USE_CASE.STATUS_LABEL' | translate }}:</p>
+      <span [style.color]="getStepColor(useCase)">
+        {{ getStepLabel(useCase) | translate }}
+      </span>
+    </div>
+
+    <div class="mw-300" *ngIf="getDescription(useCase) as description">
+      <p class="label">{{ 'USE_CASE.SHORT_DESCRIPTION' | translate }}:</p>
+      <span>
+        {{ description | truncate: 80 }}
+      </span>
+    </div>
+
+    <div *ngIf="useCase.plantId">
+      <p class="label">{{ 'USE_CASE.PLANT' | translate }}:</p>
+      <span>{{ plant?.name }}</span>
+    </div>
+
+    <div>
+      <p class="label">{{ 'USE_CASE.LAST_CHANGED' | translate }}:</p>
+      <span>{{ useCase.updatedAt | short }}</span>
+    </div>
+
+    <div>
+      <p class="label">{{ 'USE_CASE.REQUESTOR' | translate }}:</p>
+      <span>{{ useCase.createdBy | username }}</span>
+    </div>
+  </mat-card>
+
+  <!-- <mat-card class="steps-card br-8">
+    <app-use-case-steps
+      class="pv-6"
+      [steps]="steps$ | async"
+      [currentStepIndex]="currentStepIndex$ | async"
+    ></app-use-case-steps>
+  </mat-card> -->
+
+  <mat-accordion multi>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header collapsedHeight="64px" expandedHeight="64px">
+        <mat-panel-title class="mat-h1" fxLayout="row" fxLayoutAlign=" center">
+          <ng-container
+            *ngTemplateOutlet="
+              indicator;
+              context: {
+                step: 'initial-request',
+                title: 'FORMS.TITLES.INITIAL_REQUEST' | translate
+              }
+            "
+          ></ng-container>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-initial-request-overview
+        [formStep]="getFormStep('initial-request')"
+        [exampleAttachments]="exampleAttachments"
+        [useCase]="useCase"
+      >
+      </app-initial-request-overview>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header collapsedHeight="64px" expandedHeight="64px">
+        <mat-panel-title class="mat-h1" fxLayout="row" fxLayoutAlign=" center">
+          <ng-container
+            *ngTemplateOutlet="
+              indicator;
+              context: {
+                step: 'initial-feasibility-check',
+                title: 'FORMS.TITLES.INITIAL_FEASIBILITY_CHECK' | translate
+              }
+            "
+          ></ng-container>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-initial-feasibility-check-overview
+        [formStep]="getFormStep('initial-feasibility-check')"
+        [useCase]="useCase"
+      >
+      </app-initial-feasibility-check-overview>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header collapsedHeight="64px" expandedHeight="64px">
+        <mat-panel-title class="mat-h1" fxLayout="row" fxLayoutAlign=" center">
+          <ng-container
+            *ngTemplateOutlet="
+              indicator;
+              context: {
+                step: 'detailed-request',
+                title: 'FORMS.TITLES.DETAILED_REQUEST' | translate
+              }
+            "
+          ></ng-container>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-detailed-request-overview
+        [formStep]="getFormStep('detailed-request')"
+        [useCase]="useCase"
+        [attachments]="variantAttachments"
+        [variants]="variants"
+      >
+      </app-detailed-request-overview>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header collapsedHeight="64px" expandedHeight="64px">
+        <mat-panel-title class="mat-h1" fxLayout="row" fxLayoutAlign=" center">
+          <ng-container
+            *ngTemplateOutlet="
+              indicator;
+              context: { step: 'offer', title: 'FORMS.TITLES.USE_CASE_OFFER' | translate }
+            "
+          ></ng-container>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-offer-overview
+        [formStep]="getFormStep('offer')"
+        [useCase]="useCase"
+        [variants]="variants"
+      >
+      </app-offer-overview>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header collapsedHeight="64px" expandedHeight="64px">
+        <mat-panel-title class="mat-h1" fxLayout="row" fxLayoutAlign=" center">
+          <ng-container
+            *ngTemplateOutlet="
+              indicator;
+              context: { step: 'order', title: 'FORMS.TITLES.USE_CASE_ORDER' | translate }
+            "
+          ></ng-container>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-order-overview [formStep]="getFormStep('order')" [useCase]="useCase">
+      </app-order-overview>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header collapsedHeight="64px" expandedHeight="64px">
+        <mat-panel-title class="mat-h1" fxLayout="row" fxLayoutAlign=" center">
+          <ng-container
+            *ngTemplateOutlet="
+              indicator;
+              context: { step: 'setup-details', title: 'FORMS.TITLES.SETUP_DETAILS' | translate }
+            "
+          ></ng-container>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-setup-details-overview
+        [formStep]="getFormStep('setup-details')"
+        [useCase]="useCase"
+      ></app-setup-details-overview>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header collapsedHeight="64px" expandedHeight="64px">
+        <mat-panel-title class="mat-h1" fxLayout="row" fxLayoutAlign=" center">
+          <ng-container
+            *ngTemplateOutlet="
+              indicator;
+              context: { step: 'implementation', title: 'FORMS.TITLES.IMPLEMENTATION' | translate }
+            "
+          ></ng-container>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header collapsedHeight="64px" expandedHeight="64px">
+        <mat-panel-title class="mat-h1" fxLayout="row" fxLayoutAlign=" center">
+          <ng-container
+            *ngTemplateOutlet="
+              indicator;
+              context: { step: 'testing', title: 'FORMS.TITLES.TESTING' | translate }
+            "
+          ></ng-container>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header collapsedHeight="64px" expandedHeight="64px">
+        <mat-panel-title class="mat-h1" fxLayout="row" fxLayoutAlign=" center">
+          <ng-container
+            *ngTemplateOutlet="
+              indicator;
+              context: { step: 'approval', title: 'FORMS.TITLES.APPROVAL' | translate }
+            "
+          ></ng-container>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-use-case-approval-overview
+        [formStep]="getFormStep('approval')"
+        [useCase]="useCase"
+        [attachments]="testResultAttachments"
+      ></app-use-case-approval-overview>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header collapsedHeight="64px" expandedHeight="64px">
+        <mat-panel-title class="mat-h1" fxLayout="row" fxLayoutAlign=" center">
+          <ng-container
+            *ngTemplateOutlet="
+              indicator;
+              context: { step: 'live', title: 'FORMS.TITLES.LIVE' | translate }
+            "
+          ></ng-container>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
+<ng-template #indicator let-step="step" let-title="title">
+  <ng-container *ngIf="getStepDetails(step) as details">
+    <ng-container [ngSwitch]="details.status">
+      <mat-icon fxFlex="2" *ngSwitchCase="'complete'" class="hint-icon">check_circle</mat-icon>
+      <mat-icon fxFlex="2" *ngSwitchCase="'declined'" class="hint-icon red-icon">cancel</mat-icon>
+      <div *ngSwitchCase="'progress'" fxFlex="2">
+        <div class="number-icon primary">{{ details.index }}</div>
+      </div>
+      <div *ngSwitchDefault fxFlex="2">
+        <div class="number-icon">{{ details.index }}</div>
+      </div>
+    </ng-container>
+
+    <div
+      [id]="'step-' + step"
+      fxFlex="40"
+      class="ml-8"
+      [style.color]="getStatusColor(details.status)"
+    >
+      {{ title }}
+    </div>
+    <div fxFlex="15">
+      <p class="step-card">{{ 'USE_CASE.DURATION' | translate }}</p>
+      <span class="step-card-value">
+        {{ getDuration(step) }}
+      </span>
+    </div>
+    <div *ngIf="getStepResponsibility(step) as label" fxFlex="20">
+      <p class="step-card">{{ 'USE_CASE.RESPONSIBLE' | translate }}</p>
+      <span class="step-card-value">
+        {{ label | translate }}
+      </span>
+    </div>
+
+    <div
+      *ngIf="details.status === 'declined'"
+      [style.color]="getStatusColor(details.status)"
+      fxFlex="20"
+      class="text-right step-state"
+    >
+      <span>{{ 'USE_CASE.STATUS.DECLINED' | translate }}</span>
+    </div>
+    <div
+      *ngIf="details.status === 'progress' && details.responsible"
+      (click)="$event.stopPropagation()"
+      class="text-right step-state"
+    >
+      <a
+        class="ml-auto"
+        mat-flat-button
+        color="primary"
+        [routerLink]="['/use-cases', 'edit', useCase.id, step]"
+      >
+        <span>{{ 'USE_CASE.ACTION_REQUIRED' | translate }}</span>
+      </a>
+    </div>
+  </ng-container>
+</ng-template>

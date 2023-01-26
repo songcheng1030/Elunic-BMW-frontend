@@ -1,0 +1,11 @@
+<ol>
+  <li *ngFor="let segment of segments; let last = last" class="segment-name">
+    <a [class.last]="last" [routerLink]="segment.link">
+      <mat-icon *ngIf="segment.backButton" class="mi-16 mr-5 text-light-gray back-icon"
+        >arrow_back</mat-icon
+      >
+      {{ segment.translate ? (segment.name | translate) : getText(segment.name) }}
+    </a>
+    <span class="divider" *ngIf="!last">/</span>
+  </li>
+</ol>

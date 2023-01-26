@@ -1,0 +1,88 @@
+$utilities: (
+  'display': (
+    class: d,
+    property: display,
+    values: inline inline-block block grid table table-row table-cell flex inline-flex none,
+  ),
+  'flex-direction': (
+    class: flex,
+    property: flex-direction,
+    values: row column row-reverse column-reverse,
+  ),
+  'justify-content': (
+    property: justify-content,
+    values: (
+      start: flex-start,
+      end: flex-end,
+      center: center,
+      between: space-between,
+      around: space-around,
+      evenly: space-evenly,
+    ),
+  ),
+  'align-items': (
+    property: align-items,
+    values: (
+      start: flex-start,
+      end: flex-end,
+      center: center,
+      baseline: baseline,
+      stretch: stretch,
+    ),
+  ),
+  'flex-grow': (
+    property: flex-grow,
+    values: 0 1 2,
+  ),
+  'font-weight': (
+    class: font,
+    property: font-weight,
+    values: (
+      bold: 500,
+      regular: 400,
+      light: 200,
+      thin: 100,
+    ),
+  ),
+  'text-align': (
+    class: text,
+    property: text-align,
+    values: left right center,
+  ),
+  'text-color': (
+    class: text,
+    property: color,
+    values: (
+      blue: $blue1,
+      green: $green1,
+      yellow: $yellow1,
+      light-gray: $gray5,
+    ),
+  ),
+  'text-transform': (
+    class: text,
+    property: text-transform,
+    values: lowercase uppercase capitalize,
+  ),
+  'text-decoration': (
+    property: text-decoration,
+    values: none underline,
+  ),
+  'max-width': (
+    class: mw,
+    property: max-width,
+    values: (
+      300: 300px,
+      200: 200px,
+    ),
+  ),
+  'border-radius': (
+    class: br,
+    property: border-radius,
+    values: (
+      0: 0,
+      4: 4px,
+      8: 8px,
+    ),
+  ),
+);

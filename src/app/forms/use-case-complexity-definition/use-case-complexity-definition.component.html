@@ -1,0 +1,49 @@
+<form [id]="formId" [formGroup]="form">
+  <section>
+    <fieldset *ngFor="let field of complexityFields">
+      <div class="mb-16">{{ field.label | translate }}*</div>
+      <mat-radio-group aria-label="Select an option" [formControlName]="field.control">
+        <mat-radio-button *ngFor="let option of complexityOptions" class="mr-80" [value]="option">
+          {{ option }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </fieldset>
+
+    <fieldset>
+      <div class="ml-2 mt-20">
+        <h5 class="mb-4">
+          {{ 'FORMS.USE_CASE_OFFER.REQUIRED_TIMELINE_FOR_IMPLEMENTATION' | translate }}
+        </h5>
+        <h2>
+          {{ completionDate | shortDate }}
+        </h2>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <div class="d-flex">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>
+            {{ 'FORMS.USE_CASE_OFFER.OFFERABLE_TIMELINE_FOR_IMPLEMENTATION' | translate }}:
+          </mat-label>
+          <input
+            matInput
+            required
+            readonly
+            formControlName="timelineForImplementation"
+            [matDatepicker]="picker"
+            [placeholder]="'FORMS.PLACEHOLDERS.PLEASE_CHOOSE' | translate"
+            (click)="picker.open()"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="mt-1" *ngIf="showError">
+        <div class="invalid-date">
+          {{ 'FORMS.USE_CASE_OFFER.TIMELINE_COMPLETIONDATE_DIFF' | translate }}
+        </div>
+      </div>
+    </fieldset>
+  </section>
+</form>

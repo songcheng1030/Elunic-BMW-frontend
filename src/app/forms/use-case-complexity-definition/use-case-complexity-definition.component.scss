@@ -1,0 +1,8 @@
+@import 'variables';
+@import 'tools';
+
+:host ::ng-deep {
+  .invalid-date {
+    color: #f00;
+  }
+}

@@ -1,0 +1,28 @@
+<div class="container toolbar-container">
+  <div>
+    <app-breadcrumb class="d-block mb-18" [segments]="segments"></app-breadcrumb>
+  </div>
+  <a
+    class="ml-auto"
+    mat-flat-button
+    color="primary"
+    [routerLink]="['/use-cases', 'new']"
+    [queryParams]="{ plantId: plantId$ | async }"
+  >
+    <mat-icon class="mi-16 mr-6">add</mat-icon>
+    <span>{{ 'USE_CASE.CREATE_USE_CASE' | translate }}</span>
+  </a>
+</div>
+<div class="contianer status-container">
+  <app-kpi-cards [plantId]="plantId$ | async"></app-kpi-cards>
+</div>
+<div class="contianer search-container">
+  <app-search
+    [placeholder]="'USE_CASE.FILTER_USE_CASES' | translate"
+    (search)="q$.next($event)"
+  ></app-search>
+  <app-step-filter (filter)="stepStatusFilter$.next($event)"></app-step-filter>
+</div>
+<div class="contianer table-container">
+  <app-use-cases-table [filter]="filter$ | async"></app-use-cases-table>
+</div>

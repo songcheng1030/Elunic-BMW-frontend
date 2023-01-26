@@ -1,0 +1,74 @@
+<table>
+  <tr>
+    <th></th>
+    <th>
+      {{ 'FORMS.VARIANTS.VARIANT' | translate }}
+    </th>
+    <th>{{ 'FORMS.VARIANTS.IDENTIFICATION_CRITERIA' | translate }}</th>
+    <th>{{ 'FORMS.EXAMPLE_IMAGES.DESCRIPTION' | translate }}</th>
+  </tr>
+
+  <ng-container *ngIf="variant">
+    <tr>
+      <td class="variant-image">
+        <img
+          *ngIf="attachments[0] as attachment"
+          class="pointer"
+          [src]="getThumbnailSrc(attachment.refId)"
+          (click)="lightbox.open(0, galleryId)"
+        />
+      </td>
+      <td>
+        <div>{{ variant.name }}</div>
+      </td>
+      <td>
+        <div>{{ getIdentificationCriteriaLabel(variant.identificationCriteria) }}</div>
+        <div *ngIf="variant.identificationCriteria?.text" class="mt-8">
+          {{ 'FORMS.FEATURE_DEFINITION.OTHER' | translate }}:
+          {{ variant.identificationCriteria.text || '' }}
+        </div>
+      </td>
+      <td>
+        <div>{{ variant.description }}</div>
+      </td>
+    </tr>
+
+    <tr *ngFor="let attachment of attachments; let i = index">
+      <td></td>
+      <td colspan="3">
+        <div class="d-flex flex-column field-container">
+          <div class="d-flex align-items-center">
+            <div class="img-container">
+              <img
+                width="90px"
+                class="pointer"
+                [src]="getThumbnailSrc(attachment.refId)"
+                (click)="lightbox.open(i, galleryId)"
+              />
+            </div>
+            <ng-container>
+              <div *ngIf="attachment.metadata.isOK">
+                {{ 'FORMS.EXAMPLE_IMAGES.OK' | translate }}
+              </div>
+              <div *ngIf="!attachment.metadata.isOK">
+                {{ 'FORMS.EXAMPLE_IMAGES.NOK' | translate }}
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </ng-container>
+</table>
+
+<ng-template
+  #itemTemplate
+  let-index="index"
+  let-type="type"
+  let-data="data"
+  let-currIndex="currIndex"
+>
+  <div *ngIf="type === 'image' && index === currIndex" class="gallery-item-title">
+    <span> {{ data?.title$ | async }} </span>
+  </div>
+</ng-template>

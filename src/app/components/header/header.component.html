@@ -1,0 +1,66 @@
+<header class="container">
+  <a class="brand font-16" routerLink="/">{{ 'COMMON.TITLE' | translate }}</a>
+  <ng-container>
+    <app-header-search
+      class="ml-auto"
+      [placeholder]="'USE_CASE.SEARCH' | translate"
+      (search)="onSearchEvent($event)"
+      [matMenuTriggerFor]="menu"
+    ></app-header-search>
+    <mat-menu #menu="matMenu" xPosition="before">
+      <div class="search-menu" *ngIf="searchResultFlag && searchMenuOpen">
+        <div *ngFor="let searchResult of searchResults; let i = index" class="menu-item">
+          <a
+            [routerLink]="['/use-cases', searchResult.id]"
+            class="title no-underline"
+            (click)="onSetSearch()"
+            >{{ searchResult.name }}</a
+          >
+          <div class="menu-plant">
+            {{ 'HEADER.PLANT' | translate }}: {{ searchResult.plantId }} -
+            {{ searchResult.plantName
+            }}<span *ngIf="searchResult.currentStep">
+              • {{ 'HEADER.STATUS' | translate }}:
+              {{ getCurrentStepLabel(searchResult) | translate }}</span
+            >
+          </div>
+          <a
+            *ngFor="let matchingStepType of getSortedMatchingTypes(searchResult); let i = index"
+            class="d-flex mt-4 mb-4 match-type match-type-text no-underline"
+            [routerLink]="['/use-cases', searchResult.id]"
+            [queryParams]="{ step: matchingStepType }"
+            (click)="onSetSearch()"
+            >{{ getStepLabel(matchingStepType) | translate }}</a
+          >
+        </div>
+      </div>
+      <div *ngIf="!searchResultFlag && searchMenuOpen" class="empty-result">
+        {{ 'HEADER.NO_RESULT' | translate }}
+      </div>
+    </mat-menu>
+  </ng-container>
+  <button mat-stroked-button class="ml-16 inform-btn">
+    <a href="mailto:info_AIQX@bmw.de" class="no-underline">{{ 'COMMON.GET_HELP' | translate }}</a>
+  </button>
+  <ng-container *ngIf="showRoleDropdown; else logoutBtn">
+    <button mat-button [matMenuTriggerFor]="menu">
+      <span>{{ (authService.isRequestor ? 'USER.REQUESTOR' : 'USER.AIQX_TEAM') | translate }}</span>
+      <mat-icon class="ml-8 mi-16">expand_more</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" xPosition="before">
+      <button class="justify-content-end" mat-menu-item (click)="switchToRequestor()">
+        <mat-icon *ngIf="authService.isRequestor" class="ml-8 mi-16">check</mat-icon>
+        <span>{{ 'USER.REQUESTOR' | translate }}</span>
+      </button>
+      <button class="justify-content-end" mat-menu-item (click)="switchToAiqxTeam()">
+        <mat-icon *ngIf="authService.isAIQXTeam" class="ml-8 mi-16">check</mat-icon>
+        <span>{{ 'USER.AIQX_TEAM' | translate }}</span>
+      </button>
+    </mat-menu>
+  </ng-container>
+  <ng-template #logoutBtn>
+    <button mat-button class="ml-10 logout-btn">
+      <a [href]="logoutUrl" class="no-underline">Logout</a>
+    </button>
+  </ng-template>
+</header>
